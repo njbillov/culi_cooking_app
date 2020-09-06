@@ -1,0 +1,6 @@
+*.iml
+.idea
+.DS_store
+.packages
+build
+.dart_tool/chrome-device
