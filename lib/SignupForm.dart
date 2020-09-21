@@ -28,7 +28,7 @@ class SignupSkills extends StatelessWidget {
         body: Center(
             child: Column(
                 children: <Widget>[
-                  SizedBox(
+                  Container(
                     height: 0.015 * height,
                   ),
                   DotsIndicator(
@@ -41,20 +41,18 @@ class SignupSkills extends StatelessWidget {
                       activeSize: const Size.square(16),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.05 * height,
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.1 * height,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        "What do your current skills allow?",
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headline4,
-                      ),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      "What do your current skills allow?",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline4,
                     ),
                   ),
 
@@ -87,7 +85,7 @@ class SignupSkills extends StatelessWidget {
                         )
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.05 * height,
                   ),
                   Container(
@@ -119,7 +117,7 @@ class SignupSkills extends StatelessWidget {
                         )
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.05 * height,
                   ),
                   Container(
@@ -151,7 +149,7 @@ class SignupSkills extends StatelessWidget {
                         )
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.05 * height,
                   ),
                   Container(
@@ -227,10 +225,10 @@ class SignupFrequency extends StatelessWidget {
                       activeSize: const Size.square(16),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.05 * height,
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.1 * height,
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -243,7 +241,7 @@ class SignupFrequency extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.2 * height,
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -263,7 +261,7 @@ class SignupFrequency extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.1 * height,
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -276,18 +274,15 @@ class SignupFrequency extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  SizedBox(
+                  Container(
                     height: 0.1 * height,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        "Do you want leftovers for lunch?",
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headline4,
-                      ),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      "Do you want leftovers for lunch?",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline4,
                     ),
                   ),
                   Container(
@@ -315,7 +310,7 @@ class SignupFrequency extends StatelessWidget {
                         )
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.05 * height,
                   ),
                   Container(
@@ -383,7 +378,7 @@ class SignupUserInformation extends StatelessWidget {
         body: Center(
             child: Column(
                 children: <Widget>[
-                  SizedBox(
+                  Container(
                     height: 0.015 * height,
                   ),
                   DotsIndicator(
@@ -396,10 +391,10 @@ class SignupUserInformation extends StatelessWidget {
                       activeSize: const Size.square(16),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.025 * height,
                   ),
-                  SizedBox(
+                  Container(
                     height: 0.125 * height,
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 32.0),

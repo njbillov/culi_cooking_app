@@ -1,7 +1,9 @@
+import 'package:app/InteractionNavigator.dart';
 import 'package:app/SignupIntroduction.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'MenuSelection.dart';
 import 'Theme.dart';
 import 'models/SignUp.dart';
 
@@ -42,64 +44,12 @@ class SalusInteractionNavigator extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SignupIntroduction(),
-      // home: SelectionScreen(title: 'Selection Screen'),
+      home: InteractionNavigator(),
       routes: {
-        '/selection': (context) => SelectionScreen(title: 'Selection Screen'),
+        '/selection': (context) => InteractionNavigator(),
         '/introduction': (context) => SignupIntroduction(),
+        '/menuselection': (context) => MenuIntroduction(),
       }
     );
   }
-}
-
-class SelectionScreen extends StatefulWidget {
-
-  final String title;
-
-  SelectionScreen({Key key, this.title}) : super(key: key);
-  @override
-  _SelectionScreenState createState() => _SelectionScreenState();
-}
-
-class _SelectionScreenState extends State<SelectionScreen> {
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title)),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.85,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  child: RaisedButton(
-                    onPressed: () => print("Pressed Button"),
-                    child: Text("Text")
-                  )
-                ),
-              ),
-            ],
-          ),
-        ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            title: Text("Navigation button 1"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text("Navigation button 2"),
-          ),
-        ],
-      ),
-    );
-  }
-
 }
