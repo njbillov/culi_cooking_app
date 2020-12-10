@@ -8,7 +8,11 @@ import 'Theme.dart';
 import 'models/SignUp.dart';
 
 void main() {
-  runApp(SalusInteractionNavigator());
+  runApp(
+      WillPopScope(onWillPop: () { print("Going back a page"); return Future.value(false);},
+        child: SalusInteractionNavigator()
+      )
+  );
 }
 
 class SalusInteractionNavigator extends StatelessWidget {
@@ -16,7 +20,7 @@ class SalusInteractionNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Salus Interaction Navigator',
+      title: 'Culi Interaction Navigator',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -27,17 +31,18 @@ class SalusInteractionNavigator extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.green,
+        // primarySwatch: Colors.green,
         appBarTheme: AppBarTheme(
           color: Colors.white,
           actionsIconTheme: IconThemeData(
-            color: Salus.green
+            color: Culi.coral
           ),
           iconTheme: IconThemeData(
-            color: Salus.green,
+            color: Culi.coral,
           )
         ),
-        textTheme: Salus.textTheme,
+        textTheme: Culi.textTheme,
+        backgroundColor: Culi.cream,
         // textTheme: ,
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
@@ -47,7 +52,7 @@ class SalusInteractionNavigator extends StatelessWidget {
       home: InteractionNavigator(),
       routes: {
         '/selection': (context) => InteractionNavigator(),
-        '/introduction': (context) => SignupIntroduction(),
+        '/introduction': (context) => NewSignupIntroduction(),
         '/menuselection': (context) => MenuIntroduction(),
       }
     );

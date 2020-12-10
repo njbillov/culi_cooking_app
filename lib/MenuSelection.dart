@@ -1,5 +1,7 @@
 
+import 'package:app/MenuViewer.dart';
 import 'package:app/NavigationBarHelpers.dart';
+import 'package:app/models/RecipeSchedule.dart';
 import 'package:flutter/material.dart';
 
 import 'Theme.dart';
@@ -17,7 +19,7 @@ class MenuIntroduction extends StatelessWidget {
               height: size.height * 0.6,
               width: size.width,
               decoration: BoxDecoration(
-                color: Salus.lightGreen,
+                color: Culi.lightGreen,
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.0),
@@ -36,13 +38,12 @@ class MenuIntroduction extends StatelessWidget {
                       ),
                     ),
                     Container(
-
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 24.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
                         child: Row(
                           children: [
                             Flexible(
@@ -56,14 +57,14 @@ class MenuIntroduction extends StatelessWidget {
                                 width: 112,
                                 height: 44,
                                 child: FlatButton(
-                                  color: Salus.green,
+                                  color: Culi.green,
                                   onPressed: () {
-                                    // Navigator.push(context,
-                                    //     MaterialPageRoute(builder: (context) => SignupIntroduction()));
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => MenuSelection()));
                                   },
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    side: BorderSide(color: Salus.green, style: BorderStyle.solid),
+                                    side: BorderSide(color: Culi.green, style: BorderStyle.solid),
                                   ),
                                   child: Text("Explore", softWrap: true, style: Theme.of(context).textTheme.headline1.copyWith(color: Colors.white)),
                                 )
@@ -92,4 +93,22 @@ class MenuIntroduction extends StatelessWidget {
       bottomNavigationBar: SalusBottomNavigationBar(1),
     );
   }
+}
+
+const RecipeOverview testRecipe = const RecipeOverview(recipeName:"Keto Avocado Bowl", recipeImageResource: "assets/images/keto_avocado_bowl.jpeg");
+
+class MenuSelection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: MenuViewer(recipeSchedule: [RecipeSchedule(recipeList: [testRecipe, testRecipe, testRecipe, testRecipe])])
+        )
+      ),
+      bottomNavigationBar: SalusBottomNavigationBar(1),
+    );
+  }
+
 }

@@ -3,5 +3,5 @@
 .DS_store
 .packages
 build
-.flutter-plugin-dependencies
+.flutter-plugins-dependencies
 .dart_tool/chrome-device

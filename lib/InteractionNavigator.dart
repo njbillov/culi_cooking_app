@@ -1,4 +1,9 @@
+import 'package:app/ChooseIntroPath.dart';
+import 'package:app/Groceries.dart';
 import 'package:app/MenuSelection.dart';
+import 'package:app/SignupForm.dart';
+import 'package:app/Social.dart';
+import 'package:app/Utilities.dart';
 import 'package:flutter/material.dart';
 
 import 'SignupIntroduction.dart';
@@ -14,41 +19,55 @@ class InteractionNavigator extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                  width: 229,
-                  height: 48,
-                  child: FlatButton(
-                    color: Salus.green,
-                    onPressed: () {
-                      Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignupIntroduction()));
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      side: BorderSide(color: Salus.green, style: BorderStyle.solid),
-                    ),
-                    child: Text("SIGN UP SCREEN",  style: Theme.of(context).textTheme.headline1.copyWith(color: Colors.white)),
-                  )
+              CuliButton(
+                "NEW SIGNUP SCREEN",
+                onPressed: () => CuliUtils.changeScreens(
+                  context: context,
+                  nextWidget: () => NewSignupIntroduction()
+                ),
               ),
-            Container(
-              height: 48,
-            ),
-              Container(
-                  width: 229,
-                  height: 48,
-                  child: FlatButton(
-                    color: Salus.green,
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => MenuIntroduction()));
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      side: BorderSide(color: Salus.green, style: BorderStyle.solid),
-                    ),
-                    child: Text("MENU SCREEN",  style: Theme.of(context).textTheme.headline1.copyWith(color: Colors.white)),
-                  )
-              )
+              CuliButton(
+                "POST SIGNUP SCREEN",
+                onPressed: () => CuliUtils.changeScreens(
+                  context: context,
+                  nextWidget: () => ChooseIntroStarter()
+                ),
+              ),
+              CuliButton(
+                "GROCERY INTRO",
+                onPressed: () => CuliUtils.changeScreens(
+                    context: context,
+                    nextWidget: () => GroceryIntro()
+                ),
+              ),
+              CuliButton(
+                "SOCIAL INTRO",
+                onPressed: () => CuliUtils.changeScreens(
+                    context: context,
+                    nextWidget: () => SocialIntro()
+                ),
+              ),
+              CuliButton(
+                "CHEF NEXT",
+                onPressed: () => CuliUtils.changeScreens(
+                    context: context,
+                    nextWidget: () => ChooseIntroStarter2()
+                ),
+              ),
+              CuliButton(
+                "OLD SIGNUP SCREEN",
+                onPressed: () => CuliUtils.changeScreens(
+                  context: context,
+                  nextWidget: () => SignupSkills()
+                ),
+              ),
+              CuliButton(
+                "MENU SCREEN",
+                onPressed: () => CuliUtils.changeScreens(
+                    context: context,
+                    nextWidget: () => MenuIntroduction()
+                ),
+              ),
             ],
           )
         )

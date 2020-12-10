@@ -9,6 +9,7 @@ class SignUp {
   String name;
   String email;
   String password;
+  List<String> list;
 
   SignUp({this.level, this.frequency, this.preferredNumberServings, this.name, this.email, this.password});
 

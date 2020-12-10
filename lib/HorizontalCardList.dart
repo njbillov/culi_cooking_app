@@ -7,8 +7,9 @@ class HorizontalCardList extends StatefulWidget {
   final List<Widget> children;
   final Color color;
   final Color shadowColor;
+  final double height;
 
-  const HorizontalCardList({Key key, @required this.children, this.color = Colors.transparent, this.shadowColor = Colors.transparent}) : super(key: key);
+  const HorizontalCardList({Key key, @required this.children, this.color = Colors.transparent, this.shadowColor = Colors.transparent, this.height}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HorizontalCardListState();
@@ -19,12 +20,10 @@ class _HorizontalCardListState extends State<HorizontalCardList> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Column(
       children: <Widget>[
         Container(
-          height: size.height * 0.24,
+          height: widget.height,
           child: PageView.builder(
               itemCount: widget.children.length,
               controller: PageController(viewportFraction: 1.0),
@@ -51,9 +50,9 @@ class _HorizontalCardListState extends State<HorizontalCardList> {
           //   setState(() => _index = position as int);
           // },
           decorator: DotsDecorator(
-            color: Salus.widgetInactiveColor,
+            color: Culi.lightCoral,
             size: const Size.square(13),
-            activeColor: Salus.widgetActiveColor,
+            activeColor: Culi.coral,
             activeSize: const Size.square(16),
           ),
         ),

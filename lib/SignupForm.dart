@@ -1,7 +1,9 @@
 
-import 'package:app/SalusSlider.dart';
+import 'package:app/InteractionNavigator.dart';
+import 'package:app/CuliSlider.dart';
 import 'package:app/SignupIntroduction.dart';
 import 'package:app/TitledTextField.dart';
+import 'package:app/Utilities.dart';
 import 'package:app/models/SignUp.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -35,9 +37,9 @@ class SignupSkills extends StatelessWidget {
                     dotsCount: 3,
                     position: 0.0,
                     decorator: DotsDecorator(
-                      color: Salus.widgetInactiveColor,
+                      color: Culi.widgetInactiveColor,
                       size: const Size.square(13),
-                      activeColor: Salus.widgetActiveColor,
+                      activeColor: Culi.widgetActiveColor,
                       activeSize: const Size.square(16),
                     ),
                   ),
@@ -68,7 +70,7 @@ class SignupSkills extends StatelessWidget {
                               .bodyText1
                               .copyWith(fontSize: 18.0),
                               textAlign: TextAlign.center),
-                          color: Salus.buttonBackground,
+                          color: Culi.buttonBackground,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -100,7 +102,7 @@ class SignupSkills extends StatelessWidget {
                                   .bodyText1
                                   .copyWith(fontSize: 18.0),
                               textAlign: TextAlign.center),
-                          color: Salus.buttonBackground,
+                          color: Culi.buttonBackground,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -132,7 +134,7 @@ class SignupSkills extends StatelessWidget {
                                   .bodyText1
                                   .copyWith(fontSize: 18.0),
                               textAlign: TextAlign.center),
-                          color: Salus.buttonBackground,
+                          color: Culi.buttonBackground,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -164,7 +166,7 @@ class SignupSkills extends StatelessWidget {
                               .bodyText1
                               .copyWith(fontSize: 18.0),
                               textAlign: TextAlign.center),
-                          color: Salus.buttonBackground,
+                          color: Culi.buttonBackground,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -219,9 +221,9 @@ class SignupFrequency extends StatelessWidget {
                     dotsCount: 3,
                     position: 1.0,
                     decorator: DotsDecorator(
-                      color: Salus.widgetInactiveColor,
+                      color: Culi.widgetInactiveColor,
                       size: const Size.square(13),
-                      activeColor: Salus.widgetActiveColor,
+                      activeColor: Culi.widgetActiveColor,
                       activeSize: const Size.square(16),
                     ),
                   ),
@@ -248,7 +250,7 @@ class SignupFrequency extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                              child: SalusSlider(
+                              child: CuliSlider(
                                 min: 1,
                                 max: 4,
                                 ticks: 3,
@@ -297,7 +299,7 @@ class SignupFrequency extends StatelessWidget {
                               .headline3
                               .copyWith(fontSize: 18.0),
                               textAlign: TextAlign.center),
-                          color: Salus.buttonBackground,
+                          color: Culi.buttonBackground,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -325,7 +327,7 @@ class SignupFrequency extends StatelessWidget {
                                   .headline3
                                   .copyWith(fontSize: 18.0),
                               textAlign: TextAlign.center),
-                          color: Salus.buttonBackground,
+                          color: Culi.buttonBackground,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -385,9 +387,9 @@ class SignupUserInformation extends StatelessWidget {
                     dotsCount: 3,
                     position: 2.0,
                     decorator: DotsDecorator(
-                      color: Salus.widgetInactiveColor,
+                      color: Culi.widgetInactiveColor,
                       size: const Size.square(13),
-                      activeColor: Salus.widgetActiveColor,
+                      activeColor: Culi.widgetActiveColor,
                       activeSize: const Size.square(16),
                     ),
                   ),
@@ -414,7 +416,7 @@ class SignupUserInformation extends StatelessWidget {
                       Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: TitledTextField(
-                            title: "Name",
+                            "Name",
                             fieldUpdater: (String name) => {signup.name = name},
                             validator: (name) => name.length > 0 ? null : "Invalid name length",
                         ),
@@ -422,7 +424,7 @@ class SignupUserInformation extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: TitledTextField(
-                            title: "Email",
+                            "Email",
                             fieldUpdater: (String email) => {signup.email = email},
                             validator: (email) => emailValidator(email) ? null : "Invalid email",
                         ),
@@ -430,7 +432,7 @@ class SignupUserInformation extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: TitledTextField(
-                            title: "Password",
+                            "Password",
                             hidden: true,
                             fieldUpdater: (String password) => {signup.password = password},
                             validator: (password) => passwordValidator(password) ? null : "Invalid password",
@@ -462,13 +464,13 @@ class SignupDebugScreen extends StatelessWidget {
                   width: 229,
                   height: 48,
                   child: FlatButton(
-                    color: Salus.green,
+                    color: Culi.green,
                     onPressed: () {
                       while(Navigator.canPop(context)) Navigator.pop(context);
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
-                      side: BorderSide(color: Salus.green, style: BorderStyle.solid),
+                      side: BorderSide(color: Culi.green, style: BorderStyle.solid),
                     ),
                     child: Text("GO TO SELECTION",  style: Theme.of(context).textTheme.headline1.copyWith(color: Colors.white)),
                   )

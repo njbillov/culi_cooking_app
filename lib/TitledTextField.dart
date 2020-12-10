@@ -10,7 +10,11 @@ class TitledTextField extends StatefulWidget {
   final String Function(String) validator;
   final bool hidden;
 
-  const TitledTextField({this.title, this.fieldUpdater, this.validator, this.hidden : false});
+  static void _defaultUpdater(String s) {}
+
+  static String _defaultValidator(String s) => s;
+
+  const TitledTextField(this.title, {this.fieldUpdater = _defaultUpdater, this.validator = _defaultValidator, this.hidden = false});
 
   @override
   _TitledTextFieldState createState() => _TitledTextFieldState();
@@ -18,22 +22,27 @@ class TitledTextField extends StatefulWidget {
 
 class _TitledTextFieldState extends State<TitledTextField> {
   final _textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final double textOffset = 0;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         children: <Widget>[
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Text(widget.title, style: Theme.of(context).textTheme.headline6),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Text(widget.title, style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 13.5)),
+            ),
           ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 16.0),
           decoration: BoxDecoration(
-            color: Salus.backgroundWhite,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: Culi.backgroundWhite,
+            borderRadius: BorderRadius.all(Radius.circular(41)),
+            border: Border.all(width: 3),
           ),
           child: TextFormField(
             decoration: InputDecoration(
@@ -56,9 +65,6 @@ class _TitledTextFieldState extends State<TitledTextField> {
             validator: widget.validator,
           ),
         ),
-          SizedBox(
-            height: 0.05 * MediaQuery.of(context).size.height,
-          ),
         ],
       )
     );
@@ -95,7 +101,7 @@ class _ValidatedEntryFormState extends State<ValidatedEntryForm> {
               width: 229,
               height: 48,
               child: FlatButton(
-                color: Salus.green,
+                color: Culi.green,
                 onPressed: () {
                   if(_formKey.currentState.validate())
                   Navigator.push(
@@ -107,7 +113,7 @@ class _ValidatedEntryFormState extends State<ValidatedEntryForm> {
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
-                  side: BorderSide(color: Salus.green, style: BorderStyle.solid),
+                  side: BorderSide(color: Culi.green, style: BorderStyle.solid),
                 ),
                 child: Text(widget.submitButtonText,  style: Theme.of(context).textTheme.headline1.copyWith(color: Colors.white)),
               )

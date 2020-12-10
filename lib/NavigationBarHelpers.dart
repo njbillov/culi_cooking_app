@@ -11,7 +11,7 @@ class SalusBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
         // onTap: (tappedIndex) => {},
-        selectedItemColor: Salus.headerTextBlue,
+        selectedItemColor: Culi.headerTextBlue,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: false,
         currentIndex: index,
