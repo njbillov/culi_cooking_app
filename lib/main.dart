@@ -1,60 +1,59 @@
-import 'package:app/InteractionNavigator.dart';
-import 'package:app/SignupIntroduction.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:provider/provider.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
-import 'MenuSelection.dart';
-import 'Theme.dart';
-import 'models/SignUp.dart';
+import 'data_manipulation/gql_interface.dart';
+import 'loading_screen.dart';
+import 'models/account.dart';
+import 'models/menus.dart';
+import 'theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await tz.initializeTimeZones();
+  FlutterAppBadger.removeBadge();
+  final Account account = await Account().loadFromCache();
+  final Menus menus = await Menus().loadFromCache();
+  final Menu menu = await Menu().loadFromCache();
+
+  log('${account == null ? "Account is null" : "Account is not null"}');
   runApp(
-      WillPopScope(onWillPop: () { print("Going back a page"); return Future.value(false);},
-        child: SalusInteractionNavigator()
-      )
+    CuliInteractionNavigator(
+      account: account,
+      menus: menus,
+      menu: menu,
+    ),
   );
 }
 
-class SalusInteractionNavigator extends StatelessWidget {
+class CuliInteractionNavigator extends StatelessWidget {
   // This widget is the root of your application.
+  final Account account;
+  final Menus menus;
+  final Menu menu;
+
+  CuliInteractionNavigator({this.account, this.menus, this.menu, Key key})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Culi Interaction Navigator',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        // primarySwatch: Colors.green,
-        appBarTheme: AppBarTheme(
-          color: Colors.white,
-          actionsIconTheme: IconThemeData(
-            color: Culi.coral
-          ),
-          iconTheme: IconThemeData(
-            color: Culi.coral,
-          )
-        ),
-        textTheme: Culi.textTheme,
-        backgroundColor: Culi.cream,
-        // textTheme: ,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    GraphQLWrapper.setEndpoints().then((value) => value
+        ? log('Endpoint connection successful')
+        : log('Endpoint connection failed'));
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: account),
+        ChangeNotifierProvider.value(value: menu),
+        ChangeNotifierProvider.value(value: menus),
+      ],
+      child: MaterialApp(
+        title: 'Culi Interaction Navigator',
+        theme: culiTheme,
+        home: TopLevelInitializer(),
       ),
-      home: InteractionNavigator(),
-      routes: {
-        '/selection': (context) => InteractionNavigator(),
-        '/introduction': (context) => NewSignupIntroduction(),
-        '/menuselection': (context) => MenuIntroduction(),
-      }
     );
   }
 }
