@@ -305,8 +305,8 @@ class Account extends DatabaseChangeNotifier {
 
   Future<Menus> requestMenus(
       {int recipeCount, int menuCount, bool override = false}) async {
-    recipeCount ??= mealsPerWeek;
-    menuCount ??= this.menuCount;
+    recipeCount ??= mealsPerWeek ?? 3;
+    menuCount ??= this.menuCount ?? 2;
     final query = r'''
       mutation requestMenus($recipeCount: Int!, $menuCount: Int!, $session: String!, $override: Boolean) {
         requestMenus(recipeCount: $recipeCount, menuCount: $menuCount, session: $session, override: $override) {
@@ -368,19 +368,23 @@ class Account extends DatabaseChangeNotifier {
 
   Future<Menus> getMenus() async {
     final query = r'''
-      mutation requestMenus($session: String!) {
+      query requestMenus($session: String!) {
         account(session: $session) {
-          menus {
+           menus {
             recipes {
               recipeName
               recipeId
+              equipment {
+                name 
+                quantity
+              }
               ingredients {
                 name
-                quantity
                 unit
+                quantity
               }
               steps {
-                name
+              name
                 steps {
                   ingredients {
                     name
@@ -408,7 +412,8 @@ class Account extends DatabaseChangeNotifier {
     ''';
     final results =
         await GraphQLWrapper.query(query, variables: {'session': session});
-    Map<String, dynamic> menuMap = results['account']['menus'];
+    log(results?.toString()?.substring(200) ?? "Getting menus failed");
+    Map<String, dynamic> menuMap = results['account'];
     // log("Ingredients for the first menu: ${menuMap[0]['ingredients']}");
     final menus = Menus.fromJson(menuMap);
     return menus;
@@ -501,9 +506,9 @@ class Account extends DatabaseChangeNotifier {
         notificationMapFromJson(json['pendingNotificationMap']);
     mealsMade = json['mealsMade'] as int;
     if (json['skills'] != null) {
-      final skillField = json['skills'];
-      if (skillField.runtimeType == <String>[].runtimeType) {
-        skills = UserSkills.fromJson({'skills': skillField});
+      log(json['skills'].toString());
+      if (json['skills'].runtimeType == <dynamic>[].runtimeType) {
+        skills = UserSkills.fromJson({'skills': json['skills']});
       } else {
         skills = UserSkills.fromJson(json['skills']);
       }

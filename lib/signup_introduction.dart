@@ -9,6 +9,7 @@ import 'choose_intro_path.dart';
 import 'culi_slider.dart';
 import 'horizontal_card_list.dart';
 import 'models/account.dart';
+import 'models/menus.dart';
 import 'models/sign_up.dart';
 import 'navigation_bar_helpers.dart';
 import 'signup_form.dart';
@@ -649,15 +650,17 @@ class _LoginScreenState extends State<LoginScreen> {
         body: SingleChildScrollView(
           child: Center(
             child: Consumer<SignUp>(
-              builder: (context, signup, child) => Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    // CuliProgressBar(progress: 1),
-                    Container(
-                      height: size.height * 0.05,
-                    ),
-                    Consumer<Account>(
-                      builder: (context, account, child) => ValidatedEntryForm(
+              builder: (context, signup, child) =>
+                  Column(mainAxisAlignment: MainAxisAlignment.start, children: <
+                      Widget>[
+                // CuliProgressBar(progress: 1),
+                Container(
+                  height: size.height * 0.05,
+                ),
+                Consumer<Account>(
+                  builder: (context, account, child) => Consumer<Menus>(
+                    builder: (context, menus, child) => Consumer<Menu>(
+                      builder: (context, menu, child) => ValidatedEntryForm(
                           fields: <Widget>[
                             Padding(
                               padding: const EdgeInsets.all(16.0),
@@ -691,6 +694,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 await account.login(login: signup.loginJson);
                             if (results['login']['ok']) {
                               log("Hi ${results['login']['account']['name']}");
+                              menus.menus = (await account.getMenus()).menus;
+                              menus.write();
+                              menu.recipes = menus.menus.first.recipes;
+                              menu.write();
                               Utils.changeScreens(
                                   context: context,
                                   nextWidget: () => NavigationRoot(),
@@ -723,7 +730,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           }),
                     ),
-                  ]),
+                  ),
+                ),
+              ]),
             ),
           ),
         ),
