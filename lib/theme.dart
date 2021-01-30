@@ -544,7 +544,7 @@ class CuliRecipeCard extends StatelessWidget {
               child: Flex(direction: Axis.vertical,
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Flexible(
+                    Expanded(
                       child: Container(
                         alignment: Alignment.topLeft,
                         child: Text(recipe?.recipeName ?? '',
@@ -555,16 +555,14 @@ class CuliRecipeCard extends StatelessWidget {
                                 .copyWith(fontSize: 16)),
                       ),
                     ),
-                    Flexible(
-                      child: Container(
-                        alignment: Alignment.bottomLeft,
-                        child: Text(
-                          night,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4
-                              .copyWith(color: Culi.coral, fontSize: 16),
-                        ),
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        night,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4
+                            .copyWith(color: Culi.coral, fontSize: 16),
                       ),
                     )
                   ]),

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +8,6 @@ import 'models/account.dart';
 import 'models/menus.dart';
 import 'models/notification_payload.dart';
 import 'notification_handlers.dart';
-import 'recipe_overview.dart';
 import 'theme.dart';
 import 'utilities.dart';
 
@@ -27,23 +24,21 @@ class _MealSchedulingScreenState extends State<MealSchedulingScreen>
     final account = Provider.of<Account>(context);
     return Consumer<Menu>(
         builder: (context, menu, child) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: ListView(children: [
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: ListView(children: [
                 ...Iterable.generate(menu.recipes.length).map((e) {
-                  final disabled =
-                      e < menu.recipes.where((e) => e?.completed ?? false).length;
+                  final disabled = e <
+                      menu.recipes.where((e) => e?.completed ?? false).length;
                   return IgnorePointer(
                       ignoring: disabled,
-                      child: BackdropFilter(
-                          filter: disabled
-                              ? ImageFilter.blur()
-                              : ImageFilter.matrix(Matrix4.identity().storage),
+                      child: Opacity(
+                          opacity: disabled ? 0.3 : 1,
                           child: TimeSelector(
                               day: e,
                               initialTime: account.getNotificationTime(e))));
                 }).toList()
               ]),
-        ));
+            ));
   }
 
   @override
