@@ -53,72 +53,68 @@ class Survey extends ChangeNotifier {
         rightHint: 'Excellent',
       ),
       YesNo(
-        title: 'Would you make this recipe again?',
-        yesFollowUps: FollowUp(
-          questions: <SurveyQuestion>[
+          title: 'Would you make this recipe again?',
+          yesFollowUps: FollowUp(questions: <SurveyQuestion>[
             ChooseMany(
-              title: 'What were your favorite parts of the recipe?',
-              options: [
-                'Creativity',
-                'Final product',
-                'Time to make',
-                'Other'
-              ],
-              followUps: [
-                FollowUp(),
-                FollowUp(),
-                FollowUp(),
-                FollowUp(questions: <SurveyQuestion>[
-                  FreeResponse(title: "Tell us what else you liked about the recipe!")
+                title: 'What were your favorite parts of the recipe?',
+                options: [
+                  'Creativity',
+                  'Final product',
+                  'Time to make',
+                  'Other'
+                ],
+                followUps: [
+                  FollowUp(),
+                  FollowUp(),
+                  FollowUp(),
+                  FollowUp(questions: <SurveyQuestion>[
+                    FreeResponse(
+                        title: "Tell us what else you liked about the recipe!")
+                  ])
                 ])
-              ]
-            )
-          ]
-        ),
-        noFollowUps: FollowUp(
-          questions: <SurveyQuestion>[
+          ]),
+          noFollowUps: FollowUp(questions: <SurveyQuestion>[
             ChooseMany(
-              title: 'What did you dislike about the recipe?',
-              options: [
-                'Difficulty',
-                'Final product',
-                'Ingredients',
-                'Lack of clarity',
-                'Time to make',
-                'Other'
-              ],
-              followUps: <FollowUp>[
-                FollowUp(
-                  questions: [FreeResponse(title: 'What did you find difficult about the recipe?')]
-                ),
-                FollowUp(
-                    questions: [FreeResponse(title: 'Why did you not like the final product?')]
-                ),
-                FollowUp(
-                    questions: [
-                      ChooseMany(
+                title: 'What did you dislike about the recipe?',
+                options: [
+                  'Difficulty',
+                  'Final product',
+                  'Ingredients',
+                  'Lack of clarity',
+                  'Time to make',
+                  'Other'
+                ],
+                followUps: <FollowUp>[
+                  FollowUp(questions: [
+                    FreeResponse(
+                        title: 'What did you find difficult about the recipe?')
+                  ]),
+                  FollowUp(questions: [
+                    FreeResponse(
+                        title: 'Why did you not like the final product?')
+                  ]),
+                  FollowUp(questions: [
+                    ChooseMany(
                         title: 'Which of the ingredients did you not like?',
-                        options: recipe.ingredients.map((e) => e.name).toList()
-                      )
-                    ]
-                ),
-                FollowUp(
-                    questions: [FreeResponse(title: 'What would have made the recipe more clear?')]
-                ),
-                FollowUp(
-                    questions: [
-                      FreeResponse(title: 'What part of the recipe took too long?'),
-                      FreeResponse(title: 'How much time would you have liked the recipe to take?')
-                    ]
-                ),
-                FollowUp(
-                    questions: [FreeResponse(title: 'Tell us any other thoughts about the recipe!')]
-                ),
-              ]
-            ),
-          ]
-        )
-      ),
+                        options: recipe.ingredients.map((e) => e.name).toList())
+                  ]),
+                  FollowUp(questions: [
+                    FreeResponse(
+                        title: 'Tell us about a moment that you were confused?')
+                  ]),
+                  FollowUp(questions: [
+                    FreeResponse(
+                        title: 'What part of the recipe took too long?'),
+                    FreeResponse(
+                        title:
+                            'How much time would you have liked the recipe to take?')
+                  ]),
+                  FollowUp(questions: [
+                    FreeResponse(
+                        title: 'Tell us any other thoughts about the recipe!')
+                  ]),
+                ]),
+          ])),
     ];
 
     return Survey(questions: questions);
