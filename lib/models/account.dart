@@ -486,10 +486,11 @@ class Account extends DatabaseChangeNotifier {
       'session': session ?? '',
       'description': feedback.description,
       'tags': tags,
-      'stateDump': '',
+      'stateDump': feedback.stateDump,
       'file': fileUpload,
       'feedbackType': feedback.feedbackTag
     };
+    // log(feedback.stateDump.substring(0, 200));
     final results = await GraphQLWrapper.mutate(query, variables: variables);
     log(results.toString());
     final bool ok = results['uploadFeedback']['ok'];

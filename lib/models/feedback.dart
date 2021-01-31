@@ -11,6 +11,7 @@ class AppFeedback {
   List<String> tags;
   String jsonDump;
   String description;
+  String stateDump;
   @JsonKey(ignore: true)
   File imageFile;
 
@@ -21,6 +22,7 @@ class AppFeedback {
       this.tags = const <String>[],
       this.jsonDump = '',
       this.description = '',
+      this.stateDump = '',
       this.imageFile});
 
   factory AppFeedback.fromJson(Map<String, dynamic> json) =>

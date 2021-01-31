@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'data_manipulation/gql_interface.dart';
@@ -18,7 +19,6 @@ void main() async {
   final Account account = await Account().loadFromCache();
   final Menus menus = await Menus().loadFromCache();
   final Menu menu = await Menu().loadFromCache();
-
   log('${account == null ? "Account is null" : "Account is not null"}');
   runApp(
     CuliInteractionNavigator(
@@ -29,7 +29,7 @@ void main() async {
   );
 }
 
-class CuliInteractionNavigator extends StatelessWidget {
+class CuliInteractionNavigator extends StatefulWidget {
   // This widget is the root of your application.
   final Account account;
   final Menus menus;
@@ -39,20 +39,39 @@ class CuliInteractionNavigator extends StatelessWidget {
       : super(key: key);
 
   @override
+  _CuliInteractionNavigatorState createState() =>
+      _CuliInteractionNavigatorState();
+}
+
+class _CuliInteractionNavigatorState extends State<CuliInteractionNavigator> {
+  ScreenshotController screenshotController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    screenshotController = ScreenshotController();
+  }
+
+  @override
   Widget build(BuildContext context) {
     GraphQLWrapper.setEndpoints().then((value) => value
         ? log('Endpoint connection successful')
         : log('Endpoint connection failed'));
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: account),
-        ChangeNotifierProvider.value(value: menu),
-        ChangeNotifierProvider.value(value: menus),
+        ChangeNotifierProvider.value(value: widget.account),
+        ChangeNotifierProvider.value(value: widget.menu),
+        ChangeNotifierProvider.value(value: widget.menus),
+        Provider.value(value: screenshotController)
       ],
-      child: MaterialApp(
-        title: 'Culi Interaction Navigator',
-        theme: culiTheme,
-        home: TopLevelInitializer(),
+      child: Screenshot(
+        controller: screenshotController,
+        child: MaterialApp(
+          title: 'Culi Interaction Navigator',
+          theme: culiTheme,
+          home: TopLevelInitializer(),
+        ),
       ),
     );
   }

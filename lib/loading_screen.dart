@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer' show log;
 
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ import 'package:vector_math/vector_math.dart';
 import 'feedback.dart';
 import 'models/account.dart';
 import 'models/feedback.dart';
+import 'models/menus.dart';
 import 'navigation_bar_helpers.dart';
 import 'notification_handlers.dart';
 import 'signup_introduction.dart';
@@ -58,7 +60,6 @@ class TopLevelInitializer extends StatefulWidget {
 }
 
 class _TopLevelInitializerState extends State<TopLevelInitializer> {
-  ScreenshotController screenshotController;
   bool inScreenshot = false;
   StreamSubscription _accelerometerStream;
   DateTime startShakeEventTime = DateTime.fromMillisecondsSinceEpoch(0);
@@ -85,16 +86,26 @@ class _TopLevelInitializerState extends State<TopLevelInitializer> {
   void _giveFeedback() async {
     if (inScreenshot) return;
     inScreenshot = false;
+    final screenshotController =
+        Provider.of<ScreenshotController>(context, listen: false);
     log('Taking a screenshot at ${ModalRoute.of(context).settings.name}');
     final image = await screenshotController.capture();
+
+    final account = Provider.of<Account>(context, listen: false);
+    final menu = Provider.of<Menu>(context, listen: false);
+    final menus = Provider.of<Menus>(context, listen: false);
+
+    final stateDump = jsonEncode([account, menu, menus]);
 
     Widget notWorkingButton = CupertinoDialogAction(
       child: Text("Something Isn't Working"),
       isDefaultAction: false,
       onPressed: () async {
-        final image = await screenshotController.capture();
-        final feedback =
-            AppFeedback(imageFile: image, type: AppFeedbackType.problem);
+        // final image = await screenshotController.capture();
+        final feedback = AppFeedback(
+            imageFile: image,
+            type: AppFeedbackType.problem,
+            stateDump: stateDump);
         if (image != null) {
           //TODO insert code to upload the image
         }
@@ -112,9 +123,11 @@ class _TopLevelInitializerState extends State<TopLevelInitializer> {
       child: Text("General Feedback"),
       isDefaultAction: false,
       onPressed: () async {
-        final image = await screenshotController.capture();
-        final feedback =
-            AppFeedback(imageFile: image, type: AppFeedbackType.suggestion);
+        // final image = await screenshotController.capture();
+        final feedback = AppFeedback(
+            imageFile: image,
+            type: AppFeedbackType.suggestion,
+            stateDump: stateDump);
         if (image != null) {
           //TODO insert code to upload the image
         }
@@ -163,7 +176,6 @@ class _TopLevelInitializerState extends State<TopLevelInitializer> {
   @override
   void initState() {
     super.initState();
-    screenshotController = ScreenshotController();
     lowPassFilterFactor =
         accelerometerUpdateInterval / lowPassKernelWidthInSeconds;
     shakeDetectionThreshold *= shakeDetectionThreshold;
@@ -234,21 +246,18 @@ class _TopLevelInitializerState extends State<TopLevelInitializer> {
   Widget build(BuildContext context) {
     return Provider<Future<bool>>.value(
       value: isInitialized,
-      child: Screenshot(
-        controller: screenshotController,
-        child: MaterialApp(
-            title: 'Culi',
-            theme: culiTheme,
-            initialRoute: '/loading',
-            routes: {
-              // '/home': (context) => InteractionNavigator(),
-              '/loading': (context) => LoadingScreen(),
-              // '/selection': (context) => InteractionNavigator(),
-              '/introduction': (context) => NewSignupIntroduction(),
-              '/onboarding': (context) => NewSignupIntroduction(),
-              '/createAccount': (context) => SignupForm1(),
-            }),
-      ),
+      child: MaterialApp(
+          title: 'Culi',
+          theme: culiTheme,
+          initialRoute: '/loading',
+          routes: {
+            // '/home': (context) => InteractionNavigator(),
+            '/loading': (context) => LoadingScreen(),
+            // '/selection': (context) => InteractionNavigator(),
+            '/introduction': (context) => NewSignupIntroduction(),
+            '/onboarding': (context) => NewSignupIntroduction(),
+            '/createAccount': (context) => SignupForm1(),
+          }),
     );
   }
 }

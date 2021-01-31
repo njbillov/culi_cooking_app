@@ -46,23 +46,25 @@ class _HorizontalCardListState extends State<HorizontalCardList> {
             activeSize: const Size.square(16),
           ),
         ),
-      Container(
-          height: widget.height * 0.9,
-          child: PageView.builder(
-              itemCount: widget.children.length,
-              controller: PageController(viewportFraction: 1.0),
-              onPageChanged: (index) => setState(() => _index = index),
-              itemBuilder: (_, i) {
-                return Transform.scale(
-                  scale: 1,
-                  child: Card(
-                    shadowColor: widget.shadowColor,
-                    color: widget.color,
-                    elevation: 0,
-                    child: Center(child: widget.children[i]),
-                  ),
-                );
-              })),
+      Expanded(
+        child: Container(
+            // height: widget.height * 0.9,
+            child: PageView.builder(
+                itemCount: widget.children.length,
+                controller: PageController(viewportFraction: 1.0),
+                onPageChanged: (index) => setState(() => _index = index),
+                itemBuilder: (_, i) {
+                  return Transform.scale(
+                    scale: 1,
+                    child: Card(
+                      shadowColor: widget.shadowColor,
+                      color: widget.color,
+                      elevation: 0,
+                      child: Center(child: widget.children[i]),
+                    ),
+                  );
+                })),
+      ),
       if (!widget.dotsOnTop) ...widget.beforeDots,
       if (!widget.dotsOnTop)
         DotsIndicator(

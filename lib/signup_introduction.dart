@@ -161,7 +161,7 @@ class Onboarding2 extends StatelessWidget {
         ),
         Expanded(
           child: HorizontalCardList(
-              height: MediaQuery.of(context).size.height * 0.8,
+              // height: MediaQuery.of(context).size.height * 0.8,
               children: <Widget>[
                 InformationalCardView(
                   headerText:
@@ -838,7 +838,7 @@ class InformationalCardView extends StatelessWidget {
         Column(
           children: [
             Container(
-              height: height * 0.15,
+              height: height * 0.2,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
@@ -850,7 +850,7 @@ class InformationalCardView extends StatelessWidget {
             ),
             Container(
               width: width,
-              height: height * 0.5,
+              height: height * 0.4,
               decoration: BoxDecoration(),
             ),
             Container(
