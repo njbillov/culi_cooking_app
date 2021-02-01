@@ -161,7 +161,7 @@ class Onboarding2 extends StatelessWidget {
         ),
         Expanded(
           child: HorizontalCardList(
-              // height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.8,
               children: <Widget>[
                 InformationalCardView(
                   headerText:

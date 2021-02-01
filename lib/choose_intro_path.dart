@@ -281,28 +281,31 @@ class ChooseMenuScreen extends StatelessWidget {
                                             ),
                                           )),
                                     ),
-                                    Container(
-                                      height: size.height * 0.55,
-                                      child: ListView(
-                                        children: Iterable.generate(menus
-                                                .menus[menuIndex]
-                                                .recipes
-                                                .length)
-                                            .map(
-                                              (recipe) => Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 24,
-                                                        vertical: 8.0),
-                                                child: CuliRecipeCard(
-                                                  height: size.height * 0.15,
-                                                  recipe: menus.menus[menuIndex]
-                                                      .recipes[recipe],
-                                                  // night: "Recipe 1",
+                                    Expanded(
+                                      child: Container(
+                                        // height: size.height * 0.55,
+                                        child: ListView(
+                                          children: Iterable.generate(menus
+                                                  .menus[menuIndex]
+                                                  .recipes
+                                                  .length)
+                                              .map(
+                                                (recipe) => Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 24,
+                                                      vertical: 8.0),
+                                                  child: CuliRecipeCard(
+                                                    height: size.height * 0.15,
+                                                    recipe: menus
+                                                        .menus[menuIndex]
+                                                        .recipes[recipe],
+                                                    // night: "Recipe 1",
+                                                  ),
                                                 ),
-                                              ),
-                                            )
-                                            .toList(),
+                                              )
+                                              .toList(),
+                                        ),
                                       ),
                                     ),
                                     Consumer<Menu>(
