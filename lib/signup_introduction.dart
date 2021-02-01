@@ -208,7 +208,7 @@ class SignupForm1 extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-
+    signup.frequency = 3;
     return ChangeNotifierProvider.value(
       value: signup,
       child: Scaffold(
@@ -364,6 +364,7 @@ class SignupForm2 extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Consumer<SignUp>(
                   builder: (context, signup, child) => CuliSlider(
+                    initialValue: signup.frequency.round(),
                     sliderUpdate: (value) {
                       signup.frequency = value;
                       log("Changing signup frequency to $value");

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' show log;
+import 'dart:io';
 
+import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -94,8 +96,39 @@ class _TopLevelInitializerState extends State<TopLevelInitializer> {
     final account = Provider.of<Account>(context, listen: false);
     final menu = Provider.of<Menu>(context, listen: false);
     final menus = Provider.of<Menus>(context, listen: false);
-
-    final stateDump = jsonEncode([account, menu, menus]);
+    final deviceInfoPlugin =
+        Provider.of<DeviceInfoPlugin>(context, listen: false);
+    var deviceInfo = {};
+    if (Platform.isIOS) {
+      var osInfo = await deviceInfoPlugin.iosInfo;
+      deviceInfo = {
+        'iosVersion': osInfo.utsname.version,
+        'machine': osInfo.utsname.machine,
+        'release': osInfo.utsname.release,
+        'sysnode': osInfo.utsname.sysname,
+        'nodenode': osInfo.utsname.nodename,
+        'model': osInfo.model,
+        'systemVersion': osInfo.systemVersion,
+        'system': osInfo.systemName,
+        'name': osInfo.name
+      };
+    } else if (Platform.isAndroid) {
+      var osInfo = await deviceInfoPlugin.androidInfo;
+      deviceInfo = {
+        'type': osInfo.type,
+        'id': osInfo.id,
+        'androidVersion': osInfo.version,
+        'brand': osInfo.brand,
+        'manufacturer': osInfo.manufacturer,
+        'device': osInfo.device
+      };
+    }
+    final stateDump = jsonEncode([
+      account,
+      {'deviceInfo': deviceInfo},
+      menu,
+      menus
+    ]);
 
     Widget notWorkingButton = CupertinoDialogAction(
       child: Text("Something Isn't Working"),

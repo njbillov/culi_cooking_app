@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
@@ -45,11 +47,13 @@ class CuliInteractionNavigator extends StatefulWidget {
 
 class _CuliInteractionNavigatorState extends State<CuliInteractionNavigator> {
   ScreenshotController screenshotController;
+  DeviceInfoPlugin deviceInfo;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    deviceInfo = DeviceInfoPlugin();
     screenshotController = ScreenshotController();
   }
 
@@ -58,11 +62,25 @@ class _CuliInteractionNavigatorState extends State<CuliInteractionNavigator> {
     GraphQLWrapper.setEndpoints().then((value) => value
         ? log('Endpoint connection successful')
         : log('Endpoint connection failed'));
+    if (Platform.isIOS) {
+      deviceInfo.iosInfo.then((osInfo) => log({
+            'iosVersion': osInfo.utsname.version,
+            'machine': osInfo.utsname.machine,
+            'release': osInfo.utsname.release,
+            'sysnode': osInfo.utsname.sysname,
+            'nodenode': osInfo.utsname.nodename,
+            'model': osInfo.model,
+            'systemVersion': osInfo.systemVersion,
+            'system': osInfo.systemName,
+            'name': osInfo.name
+          }.toString()));
+    }
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: widget.account),
         ChangeNotifierProvider.value(value: widget.menu),
         ChangeNotifierProvider.value(value: widget.menus),
+        Provider.value(value: DeviceInfoPlugin),
         Provider.value(value: screenshotController)
       ],
       child: Screenshot(

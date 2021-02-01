@@ -499,7 +499,7 @@ class CuliRecipeCard extends StatelessWidget {
       this.isInsightGlobal = true})
       : super(key: key);
 
-  static const String defaultThumbnail = 'assets/images/eggfriedrice.png';
+  static const String defaultThumbnail = 'assets/images/big_noun_chef.png';
 
   @override
   Widget build(BuildContext context) {
@@ -530,12 +530,12 @@ class CuliRecipeCard extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(radius),
                         bottomLeft: Radius.circular(radius)),
-                    color: Colors.grey,
+                    color: Colors.grey.shade300,
                     image: DecorationImage(
-                      image:
-                          AssetImage(recipe?.thumbnailUrl ?? defaultThumbnail),
-                      centerSlice: Rect.largest,
-                    ))),
+                        image: AssetImage(
+                            recipe?.thumbnailUrl ?? defaultThumbnail),
+                        // centerSlice: Rect.largest,
+                        fit: BoxFit.contain))),
           ),
           Flexible(
             flex: 1,

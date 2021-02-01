@@ -23,6 +23,20 @@ class _GroceryListScreenState extends State<GroceryListScreen>
     super.build(context);
     final size = MediaQuery.of(context).size;
     final m = Provider.of<Menu>(context);
+    if (m?.recipes?.isEmpty ?? true) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Grocery List",
+              style: Theme.of(context).textTheme.headline3),
+        ),
+        body: Center(
+            child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Text("Finish selecting your menu to get your grocery list",
+              style: Theme.of(context).textTheme.headline3),
+        )),
+      );
+    }
     // log(m.recipes.map((e) => e.recipeName).join(", "));
     log(m.groceryList.ingredientMap.entries
         .map((e) => '${e.key}${e.value.map((e) => e.toJson())}')
