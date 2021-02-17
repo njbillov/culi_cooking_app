@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -70,7 +71,7 @@ class _NavigationRootState extends State<NavigationRoot> {
       // log(menu.toJson().toString());
       if (menu?.recipes?.isEmpty ?? true) {
         final account = Provider.of<Account>(context);
-        account.requestMenus();
+        account.requestMenus(override: true);
         log('Going to choose menu screen');
         return ChooseMenuScreen();
       }
@@ -98,6 +99,32 @@ class _NavigationRootState extends State<NavigationRoot> {
 
   @override
   Widget build(BuildContext context) {
+    final account = Provider.of<Account>(context, listen: false);
+    final menu = Provider.of<Menu>(context, listen: false);
+    final menus = Provider.of<Menus>(context, listen: false);
+    log("Updating menus");
+    account.updateMenus(menus, menu).then((value) {
+      if (value.isEmpty) return;
+      showCupertinoDialog(
+          context: context,
+          builder: (context) => CupertinoAlertDialog(
+                title: Text('Recipe Update'),
+                content: Text(
+                    'We noticed the ingredients in ${value.join(", ")} ${value.length == 1 ? "was" : "were"} incorrect, please check the shop tab for updates.'),
+                actions: [
+                  CupertinoDialogAction(
+                    child: Text('OK'),
+                    isDestructiveAction: false,
+                    isDefaultAction: true,
+                    onPressed: () async {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ));
+      menu.notifyListeners();
+    });
+    ;
     return DefaultTabController(
         length: tabs.length,
         child: Builder(builder: (context) {

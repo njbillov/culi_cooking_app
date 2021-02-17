@@ -29,6 +29,7 @@ class _MealSchedulingScreenState extends State<MealSchedulingScreen>
                 ...Iterable.generate(menu.recipes.length).map((e) {
                   final disabled = e <
                       menu.recipes.where((e) => e?.completed ?? false).length;
+                  print(disabled);
                   return IgnorePointer(
                       ignoring: disabled,
                       child: Opacity(
@@ -98,7 +99,7 @@ class TimeSelector extends StatelessWidget {
                   .subtract(Duration(days: 7))
                   .roundUp(),
               maximumDate:
-                  DateTime.now().toLocal().add(Duration(days: 7)).roundUp(),
+                  DateTime.now().toLocal().add(Duration(days: 14)).roundUp(),
               minuteInterval: 15,
             ),
           ),

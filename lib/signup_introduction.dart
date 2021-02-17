@@ -98,7 +98,7 @@ class Onboarding1 extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              "We believe doing  is the best way to learn.",
+              "We believe doing is the best way to learn.",
               maxLines: 3,
               textAlign: TextAlign.center,
               style:
@@ -165,13 +165,13 @@ class Onboarding2 extends StatelessWidget {
               children: <Widget>[
                 InformationalCardView(
                   headerText:
-                      "Each week, we plan out your personalized meals and send you a comprehensive grocery list. This way you can choose where, when, and  how to do your shopping",
+                      "Each week, we plan out your personalized meals and send you a comprehensive grocery list. This way you can choose where, when, and how to do your shopping",
                   bodyText:
                       "This way you can choose where, when, and how you do your shopping",
                 ),
                 InformationalCardView(
                     headerText:
-                        "Our unique AI plans menus that overlap in fresh produce, so by the end of the week, you'll be left with  zero waste.",
+                        "Our unique AI plans menus that overlap in fresh produce, so by the end of the week, you'll be left with zero waste.",
                     bodyText: "No more bell peppers to the garbage"),
                 InformationalCardView(
                     headerText:

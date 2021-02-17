@@ -33,12 +33,18 @@ class Account extends DatabaseChangeNotifier {
   AccountFlags accountFlags = AccountFlags();
   @JsonKey(fromJson: notificationMapFromJson, toJson: notificationMapToJson)
   Map<int, tz.TZDateTime> pendingNotificationMap = {};
+  @JsonKey(ignore: true)
+  int recipeRefreshIntervalInSeconds = 3600;
+  @JsonKey(ignore: true)
+  tz.TZDateTime timeSinceRefresh =
+      tz.TZDateTime.now(tz.local).subtract(Duration(seconds: 3600));
   UserSkills skills;
   int mealsMade;
   int mealsPerWeek;
   int menuCount;
 
   tz.TZDateTime getNotificationTime(int day) {
+    pendingNotificationMap ??= {};
     if (pendingNotificationMap.containsKey(day)) {
       return pendingNotificationMap[day];
     }
@@ -207,6 +213,69 @@ class Account extends DatabaseChangeNotifier {
     Map<String, dynamic> groceries = results['account']['groceryList'];
     final groceryList = GroceryList.fromJson(groceries);
     return groceryList;
+  }
+
+  Future<List<String>> updateMenus(Menus menus, Menu menu,
+      {bool force = false}) async {
+    print(
+        'Time since last refresh ${timeSinceRefresh.difference(tz.TZDateTime.now(tz.local)).inSeconds}');
+    if (force) {
+    } else if (!timeSinceRefresh
+        .add(Duration(seconds: recipeRefreshIntervalInSeconds))
+        .isBefore(tz.TZDateTime.now(tz.local))) {
+      print("Deferring recipe update until later.");
+      return [];
+    }
+    // if (menus != null) {
+    //   for (var i = 0; i < menus?.menus?.length ?? 0; ++i) {
+    //     for (var j = 0; j < menus.menus[i].recipes.length; ++j) {
+    //       final recipeId = menus.menus[i].recipes[j].recipeId;
+    //       final updatedRecipe = await getRecipe(recipeId);
+    //       menus.menus[i].recipes[j].steps = updatedRecipe.steps;
+    //       menus.menus[i].recipes[j].description = updatedRecipe.description;
+    //       log('Updating ${updatedRecipe.recipeName}');
+    //     }
+    //   }
+    //   menus.write();
+    // }
+    var recipeNamesChanged = <String>[];
+    if (menu != null) {
+      for (var i = 0; i < menu?.recipes?.length ?? 0; ++i) {
+        var changedIngredients = false;
+        final recipeId = menu.recipes[i].recipeId;
+        final updatedRecipe = await getRecipe(recipeId);
+        final newIngredientMap = updatedRecipe.ingredients
+            .asMap()
+            .map((key, value) => MapEntry(value.name, value));
+        final oldIngredientMap = menu.recipes[i].ingredients
+            .asMap()
+            .map((key, value) => MapEntry(value.name, value));
+
+        for (final entry in newIngredientMap.entries) {
+          changedIngredients |= !oldIngredientMap.containsKey(entry.key);
+          oldIngredientMap.putIfAbsent(entry.key, () => entry.value);
+        }
+        oldIngredientMap.updateAll((key, value) {
+          if (newIngredientMap.containsKey(key)) {
+            changedIngredients |=
+                value.quantity != newIngredientMap[key].quantity;
+            // print('old value: ${value}, new value: ${newIngredientMap[key]}');
+            value = newIngredientMap[key];
+          }
+          return value;
+        });
+        menu.recipes[i].steps = updatedRecipe.steps;
+        menu.recipes[i].description = updatedRecipe.description;
+        menu.recipes[i].ingredients = oldIngredientMap.values.toList();
+        if (changedIngredients) {
+          recipeNamesChanged.add(menu.recipes[i].recipeName);
+          log('Updating ${updatedRecipe.recipeName}');
+        }
+      }
+      menu.write();
+    }
+    timeSinceRefresh = tz.TZDateTime.now(tz.local);
+    return recipeNamesChanged;
   }
 
   Future<UserSkills> getSkills() async {

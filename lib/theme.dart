@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -55,6 +57,8 @@ abstract class Culi {
   static const Color accentBlue = Color.fromRGBO(107, 142, 240, 1);
   static const Color accentGreen = Color.fromRGBO(163, 219, 132, 1);
   static const Color clear = Color.fromRGBO(255, 255, 255, 0);
+  static const Color whiter = Color.fromRGBO(250, 248, 246, 1);
+  static const Color recipeBackground = Color.fromRGBO(255, 239, 218, 1);
 
   static const double letterSpacing = -0.3;
 
@@ -354,6 +358,38 @@ class CuliSplashImage extends StatelessWidget {
   }
 }
 
+class ArcPainter extends CustomPainter {
+  final Color outlineColor;
+  final double thickness;
+  final double radians;
+
+  ArcPainter(
+      {this.outlineColor = Culi.coral,
+      this.thickness = 2,
+      @required this.radians});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()
+      ..color = outlineColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = thickness;
+
+    var path = Path();
+    // TODO: do operations here
+    path.addArc(
+        Rect.fromLTWH(thickness / 2, thickness / 2, size.width - thickness,
+            size.height - thickness),
+        3 * math.pi / 2,
+        radians);
+    // path.close();
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
 class CuliAnnotatedCircle extends StatelessWidget {
   final double diameter;
   final double innerDiameter;
@@ -372,6 +408,7 @@ class CuliAnnotatedCircle extends StatelessWidget {
   final double fontSize;
   final Color labelColor;
   final FontWeight fontWeight;
+  final double circlePercentage;
 
   static _defaultFunction() {}
 
@@ -393,7 +430,8 @@ class CuliAnnotatedCircle extends StatelessWidget {
       this.labelColor = Culi.black,
       this.fontWeight = FontWeight.normal,
       this.thickness = 2,
-      this.outlineColor = Culi.black})
+      this.outlineColor = Culi.black,
+      this.circlePercentage = 0})
       : super(key: key);
 
   @override
@@ -410,33 +448,45 @@ class CuliAnnotatedCircle extends StatelessWidget {
             InkWell(
               onTap: onTap,
               onLongPress: onLongPress,
-              child: Container(
-                height: diameter,
-                width: diameter,
-                padding: EdgeInsets.all(
-                    (innerDiameter == 0) ? 0 : (diameter - innerDiameter) / 2),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(diameter / 2),
-                  border: Border.all(
-                    color: outlined ? outlineColor : Culi.clear,
-                    width: thickness,
+              child: Stack(children: [
+                Container(
+                  height: diameter,
+                  width: diameter,
+                  padding: EdgeInsets.all((innerDiameter == 0)
+                      ? 0
+                      : (diameter - innerDiameter) / 2),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(diameter / 2),
+                    border: Border.all(
+                      color: outlined ? outlineColor : Culi.clear,
+                      width: thickness,
+                    ),
+                    color: backgroundColor,
                   ),
-                  color: backgroundColor,
+                  child: Container(
+                      height: (innerDiameter == 0 ? diameter : innerDiameter),
+                      width: (innerDiameter == 0 ? diameter : innerDiameter),
+                      //     foregroundDecoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(diameter / 2),
+                      //       color: foregroundColor,
+                      //     ),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(imageName),
+                          fit: BoxFit.contain,
+                        ),
+                      )),
                 ),
-                child: Container(
-                    height: (innerDiameter == 0 ? diameter : innerDiameter),
-                    width: (innerDiameter == 0 ? diameter : innerDiameter),
-                    //     foregroundDecoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(diameter / 2),
-                    //       color: foregroundColor,
-                    //     ),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(imageName),
-                        fit: BoxFit.contain,
-                      ),
-                    )),
-              ),
+                Container(
+                  width: diameter,
+                  height: diameter,
+                  child: CustomPaint(
+                    painter: ArcPainter(
+                        thickness: thickness,
+                        radians: 2 * math.pi * circlePercentage),
+                  ),
+                )
+              ]),
             ),
             if (annotate)
               Align(
@@ -530,7 +580,7 @@ class CuliRecipeCard extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(radius),
                         bottomLeft: Radius.circular(radius)),
-                    color: Colors.grey.shade300,
+                    color: Culi.recipeBackground,
                     image: DecorationImage(
                         image: AssetImage(
                             recipe?.thumbnailUrl ?? defaultThumbnail),
@@ -578,6 +628,7 @@ class CircleList<T> extends StatelessWidget {
   final List<T> list;
   final String Function(T) getLabel;
   final String Function(T) imageSupplier;
+  final double Function(T) getProgress;
   final double height;
   final double innerDiameter;
   final double thickness;
@@ -587,14 +638,17 @@ class CircleList<T> extends StatelessWidget {
 
   static String defaultGetter(dynamic t) => "";
 
+  static double defaultProgressGetter(dynamic t) => 0;
+
   const CircleList(
       {Key key,
       this.list,
       this.getLabel = defaultGetter,
       this.imageSupplier = defaultGetter,
+      this.getProgress = defaultProgressGetter,
       this.height = 150,
       this.innerDiameter = 35,
-      this.thickness = 2,
+      this.thickness = 3,
       this.backgroundColor = Colors.white,
       this.outlineColor = Culi.black,
       this.horizontalPadding = 16.0})
@@ -623,6 +677,7 @@ class CircleList<T> extends StatelessWidget {
                       thickness: thickness,
                       outlineColor: outlineColor,
                       backgroundColor: backgroundColor,
+                      circlePercentage: getProgress(e),
                     )))
                 .toList()),
       ),

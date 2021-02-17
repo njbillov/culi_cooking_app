@@ -109,14 +109,14 @@ class MenuScreen1 extends StatelessWidget {
               height: 75,
               onPressed: () async {
                 log('Checking to see whether to get new menus');
-                if (menus?.menus?.isEmpty ?? true) {
-                  log('Getting menus');
+                log('Getting menus');
 
-                  /// Making sure to copy all fields over
-                  menus.menus = (await account.requestMenus()).menus;
-                  await menus.notifyListeners();
-                  log('New menus: ${menus.toJson().toString()}');
-                }
+                /// Making sure to copy all fields over
+                menus.menus =
+                    (await account.requestMenus(menuCount: 2, override: true))
+                        .menus;
+                await menus.notifyListeners();
+                log('New menus: ${menus.toJson().toString()}');
                 Utils.changeScreens(
                     context: context,
                     nextWidget: () => ChooseMenuScreen(),
@@ -236,7 +236,12 @@ class ChooseMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    log(Provider.of<Menus>(context).toJson().toString());
+    // log(Provider.of<Menus>(context).toJson().toString());
+    final menus = Provider.of<Menus>(context);
+    final account = Provider.of<Account>(context);
+    log(account.menuCount.toString());
+    // log(account.)
+    log(menus.toJsonString);
     return Scaffold(
         appBar: AppBar(
           title: Text("Menu", style: Theme.of(context).textTheme.headline3),
@@ -256,6 +261,7 @@ class ChooseMenuScreen extends StatelessWidget {
                           height: size.height * 0.8,
                           dotsOnTop: true,
                           children: Iterable.generate(menus.menus.length)
+                              .take(2)
                               .map((menuIndex) => Column(children: <Widget>[
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),

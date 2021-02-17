@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -38,9 +36,9 @@ class _GroceryListScreenState extends State<GroceryListScreen>
       );
     }
     // log(m.recipes.map((e) => e.recipeName).join(", "));
-    log(m.groceryList.ingredientMap.entries
-        .map((e) => '${e.key}${e.value.map((e) => e.toJson())}')
-        .join(", "));
+    // log(m.groceryList.ingredientMap.entries
+    //     .map((e) => '${e.key}${e.value.map((e) => e.toJson())}')
+    //     .join(", "));
     final menu = Provider.of<Menu>(context);
     var sortedIngredients = menu.groceryList.ingredientMap.values.toList();
     sortedIngredients.sort((a, b) => a.first.name.compareTo(b.first.name));

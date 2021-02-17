@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'ingredient.g.dart';
@@ -14,8 +15,17 @@ class Ingredient {
   @JsonKey(ignore: true)
   String use;
 
-  String get text =>
-      '${quantity.toString()} ${unit != null ? "$unit of " : ""}$name';
+  String get text {
+    var f = NumberFormat("0.##", "en_US");
+    var title = '${f.format(quantity)} ';
+    if (unit == null || name.contains(unit)) {
+    } else {
+      title += "$unit of ";
+    }
+
+    title += name;
+    return title;
+  }
 
   String get detailedText => '$text - $use';
 

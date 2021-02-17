@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'models/account.dart';
+import 'models/menus.dart';
 import 'signup_introduction.dart';
 import 'theme.dart';
 import 'utilities.dart';
@@ -13,11 +16,23 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     final account = Provider.of<Account>(context, listen: true);
     account.getSkills();
+    final menus = Provider.of<Menus>(context, listen: false);
+    final menu = Provider.of<Menu>(context, listen: false);
+    log(account.pendingNotificationMap.toString());
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           actions: [
+            IconButton(
+              icon: Icon(Icons.refresh_outlined, color: Culi.coral),
+              onPressed: () {
+                account
+                    .updateMenus(menus, menu, force: true)
+                    .then((value) => menu.notifyListeners());
+                log("Requesting menu update");
+              },
+            ),
             IconButton(
               icon: Icon(Icons.info, color: Culi.coral),
               onPressed: () {
@@ -56,7 +71,7 @@ class Profile extends StatelessWidget {
           ],
         ),
         extendBodyBehindAppBar: true,
-        backgroundColor: Culi.white,
+        backgroundColor: Culi.whiter,
         body: SafeArea(
           child: Center(
               child: ListView(children: <Widget>[
@@ -158,12 +173,9 @@ class Profile extends StatelessWidget {
             Consumer<Account>(
               builder: (context, account, child) => CircleList(
                 height: 125,
-                list: account?.skills?.masteredSkills
-                        ?.map((e) => e.name)
-                        ?.toList() ??
-                    [],
+                list: account?.skills?.masteredSkills ?? [],
                 backgroundColor: Colors.white,
-                getLabel: (item) => item,
+                getLabel: (item) => item.name,
                 imageSupplier: (_) => "assets/images/pan.png",
                 innerDiameter: 40,
                 outlineColor: Culi.coral,
@@ -179,15 +191,13 @@ class Profile extends StatelessWidget {
             Consumer<Account>(
               builder: (context, account, child) => CircleList(
                 height: 125,
-                list: account?.skills?.inProgressSkills
-                        ?.map((e) => e.name)
-                        ?.toList() ??
-                    [],
+                list: account?.skills?.inProgressSkills ?? [],
                 backgroundColor: Colors.white,
-                getLabel: (item) => item,
+                getLabel: (item) => item.name,
                 imageSupplier: (_) => "assets/images/pan.png",
+                getProgress: (skill) => skill.progress,
                 innerDiameter: 40,
-                outlineColor: Culi.coral,
+                outlineColor: Culi.black,
               ),
             ),
             Padding(
@@ -200,14 +210,12 @@ class Profile extends StatelessWidget {
             Consumer<Account>(
               builder: (context, account, child) => CircleList(
                 height: 125,
-                list:
-                    account?.skills?.newSkills?.map((e) => e.name)?.toList() ??
-                        [],
+                list: account?.skills?.newSkills ?? [],
                 backgroundColor: Colors.white,
-                getLabel: (item) => item,
+                getLabel: (item) => item.name,
                 imageSupplier: (_) => "assets/images/pan.png",
                 innerDiameter: 40,
-                outlineColor: Culi.subtextGray,
+                outlineColor: Culi.black,
               ),
             ),
           ])),
