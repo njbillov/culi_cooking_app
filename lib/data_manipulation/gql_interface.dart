@@ -61,7 +61,7 @@ class GraphQLWrapper {
 
     final results = await _wrapper._client.query(queryOptions);
 
-    print(results.data);
+    // print(results.data);
 
     return results.data;
   }
