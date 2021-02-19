@@ -438,7 +438,7 @@ class CuliAnnotatedCircle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: diameter,
-      height: diameter / 0.6,
+      height: diameter / 0.5,
       alignment: Alignment.topCenter,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
