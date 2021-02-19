@@ -41,7 +41,8 @@ class _GroceryListScreenState extends State<GroceryListScreen>
     //     .join(", "));
     final menu = Provider.of<Menu>(context);
     var sortedIngredients = menu.groceryList.ingredientMap.values.toList();
-    sortedIngredients.sort((a, b) => a.first.name.compareTo(b.first.name));
+    sortedIngredients.sort((a, b) =>
+        a.first.name.toLowerCase().compareTo(b.first.name.toLowerCase()));
     return Scaffold(
         appBar: AppBar(
           title: Text("Grocery List",
