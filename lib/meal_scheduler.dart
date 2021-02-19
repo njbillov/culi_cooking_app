@@ -29,7 +29,7 @@ class _MealSchedulingScreenState extends State<MealSchedulingScreen>
                 ...Iterable.generate(menu.recipes.length).map((e) {
                   final disabled = e <
                       menu.recipes.where((e) => e?.completed ?? false).length;
-                  print(disabled);
+                  // print(disabled);
                   return IgnorePointer(
                       ignoring: disabled,
                       child: Opacity(
