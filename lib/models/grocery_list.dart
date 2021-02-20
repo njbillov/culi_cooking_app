@@ -19,7 +19,7 @@ class GroceryList {
 
   Map<String, List<Ingredient>> combineIngredients(
       Map<String, List<Ingredient>> map, Ingredient ingredient) {
-    final key = '${ingredient.name}:${ingredient.unit}';
+    final key = '${ingredient.name}';
     if (map[key] != null) {
       map[key].add(ingredient);
     } else {
