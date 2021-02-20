@@ -621,11 +621,11 @@ class LoginScreen extends StatefulWidget {
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
   static String emailValidator(String email) {
-    return emailRegEx.hasMatch(email) ? null : "Invalid email format";
+    return null;
   }
 
   static String passwordValidator(String password) {
-    return password.length > 8 ? null : "Password is too short";
+    return null;
   }
 
   @override
