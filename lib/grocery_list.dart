@@ -189,8 +189,8 @@ class GatherRecipeItemsScreen extends StatelessWidget {
                         height: 0.075 * size.height,
                         child: Text('Gather...',
                             style: Theme.of(context).textTheme.headline2)),
-                    Container(
-                      height: size.height * 0.54,
+                    Expanded(
+                      // height: size.height * 0.54,
                       child: TabBarView(
                           children: tabs
                               .map((tab) => Align(
@@ -206,7 +206,8 @@ class GatherRecipeItemsScreen extends StatelessWidget {
                                           crossAxisCount: 4,
                                           // crossAxisSpacing: 0,
                                           // mainAxisSpacing: 100,
-                                          padding: const EdgeInsets.all(8),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
                                           childAspectRatio: 0.6,
                                           shrinkWrap: true,
                                           children: (tab.text == 'Ingredients'

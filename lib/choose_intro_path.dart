@@ -99,8 +99,8 @@ class MenuScreen1 extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText1,
                 textAlign: TextAlign.center,
               )),
-          Container(
-            height: size.height * 0.195,
+          Expanded(
+            child: Container(),
           ),
           Consumer<Account>(
             builder: (context, account, child) => CuliButton(
@@ -256,90 +256,94 @@ class ChooseMenuScreen extends StatelessWidget {
                   Container(
                     height: size.height * 0.025,
                   ),
-                  Consumer<Menus>(
-                      builder: (context, menus, child) => HorizontalCardList(
-                          height: size.height * 0.8,
-                          dotsOnTop: true,
-                          children: Iterable.generate(menus.menus.length)
-                              .take(2)
-                              .map((menuIndex) => Column(children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(1000),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 8.0,
-                                                horizontal: 16.0),
-                                            child: Text(
-                                              "Menu #${menuIndex + 1}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline4
-                                                  .copyWith(
-                                                      fontSize: 14,
-                                                      color: Culi.coral),
-                                              textAlign: TextAlign.center,
+                  Expanded(
+                    child: Consumer<Menus>(
+                        builder: (context, menus, child) => HorizontalCardList(
+                            // height: size.height * 0.8,
+                            dotsOnTop: true,
+                            children: Iterable.generate(menus.menus.length)
+                                .take(2)
+                                .map((menuIndex) => Column(children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(1000),
                                             ),
-                                          )),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        // height: size.height * 0.55,
-                                        child: ListView(
-                                          children: Iterable.generate(menus
-                                                  .menus[menuIndex]
-                                                  .recipes
-                                                  .length)
-                                              .map(
-                                                (recipe) => Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 24,
-                                                      vertical: 8.0),
-                                                  child: CuliRecipeCard(
-                                                    height: size.height * 0.15,
-                                                    recipe: menus
-                                                        .menus[menuIndex]
-                                                        .recipes[recipe],
-                                                    // night: "Recipe 1",
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8.0,
+                                                      horizontal: 16.0),
+                                              child: Text(
+                                                "Menu #${menuIndex + 1}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4
+                                                    .copyWith(
+                                                        fontSize: 14,
+                                                        color: Culi.coral),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            )),
+                                      ),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            children: Iterable.generate(menus
+                                                    .menus[menuIndex]
+                                                    .recipes
+                                                    .length)
+                                                .map(
+                                                  (recipe) => Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 24,
+                                                        vertical: 8.0),
+                                                    child: CuliRecipeCard(
+                                                      height:
+                                                          size.height * 0.15,
+                                                      recipe: menus
+                                                          .menus[menuIndex]
+                                                          .recipes[recipe],
+                                                      // night: "Recipe 1",
+                                                    ),
                                                   ),
-                                                ),
-                                              )
-                                              .toList(),
+                                                )
+                                                .toList(),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Consumer<Menu>(
-                                      builder: (context, selectedMenu, child) =>
-                                          CuliButton(
-                                              [
-                                                'Yum!',
-                                                'I like this better!'
-                                              ][menuIndex],
-                                              height: 75,
-                                              width: size.width * 0.9,
-                                              color: Culi.accentBlue,
-                                              onPressed: () async {
-                                        log('Assigning menu');
-                                        selectedMenu.copyFromJson(
-                                            menus.menus[menuIndex].toJson());
-                                        await selectedMenu.notifyListeners();
-                                        Utils.changeScreens(
-                                          context: context,
-                                          nextWidget: () =>
-                                              TimeSelectionScreen(),
-                                          routeName: '/menu/schedule',
-                                          squash: true,
-                                        );
-                                      }),
-                                    )
-                                  ]))
-                              .toList())),
+                                      Consumer<Menu>(
+                                        builder:
+                                            (context, selectedMenu, child) =>
+                                                CuliButton(
+                                                    [
+                                                      'Yum!',
+                                                      'I like this better!'
+                                                    ][menuIndex],
+                                                    height: 75,
+                                                    width: size.width * 0.9,
+                                                    color: Culi.accentBlue,
+                                                    onPressed: () async {
+                                          log('Assigning menu');
+                                          selectedMenu.copyFromJson(
+                                              menus.menus[menuIndex].toJson());
+                                          await selectedMenu.notifyListeners();
+                                          Utils.changeScreens(
+                                            context: context,
+                                            nextWidget: () =>
+                                                TimeSelectionScreen(),
+                                            routeName: '/menu/schedule',
+                                            squash: true,
+                                          );
+                                        }),
+                                      )
+                                    ]))
+                                .toList())),
+                  ),
                 ]),
           ),
         ));
@@ -364,27 +368,31 @@ class TimeSelectionScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('When should we cook together?',
-                          style: Theme.of(context).textTheme.headline2),
+                      child: Text(
+                        'When should we cook together?',
+                        style: Theme.of(context).textTheme.headline2,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    Container(
-                        height: size.height * 0.6,
-                        child: ListView(
-                            children:
-                                Iterable.generate(menu.recipes.length).map((e) {
-                          final disabled = e <
-                              menu.recipes
-                                  .where((e) => e?.completed ?? false)
-                                  .length;
-                          return IgnorePointer(
-                              ignoring: disabled,
-                              child: BackdropFilter(
-                                  filter: disabled
-                                      ? ImageFilter.blur()
-                                      : ImageFilter.matrix(
-                                          Matrix4.identity().storage),
-                                  child: TimeSelector(day: e)));
-                        }).toList())),
+                    Expanded(
+                        child: SingleChildScrollView(
+                      child: Column(
+                          children:
+                              Iterable.generate(menu.recipes.length).map((e) {
+                        final disabled = e <
+                            menu.recipes
+                                .where((e) => e?.completed ?? false)
+                                .length;
+                        return IgnorePointer(
+                            ignoring: disabled,
+                            child: BackdropFilter(
+                                filter: disabled
+                                    ? ImageFilter.blur()
+                                    : ImageFilter.matrix(
+                                        Matrix4.identity().storage),
+                                child: TimeSelector(day: e)));
+                      }).toList()),
+                    )),
                     CuliButton(
                       "Continue",
                       height: 75,

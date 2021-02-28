@@ -39,13 +39,14 @@ class RecipeOverview extends StatelessWidget {
           child: Center(
               child: Column(
         children: [
-          Container(
-            height: size.height * 0.715,
-            child: ListView(
-              children: [
-                for (int i = 0; i < recipe.steps.length; ++i)
-                  StepView(recipe: recipe, step: i, navigable: false)
-              ],
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  for (int i = 0; i < recipe.steps.length; ++i)
+                    StepView(recipe: recipe, step: i, navigable: true)
+                ],
+              ),
             ),
           ),
           Padding(
@@ -273,15 +274,18 @@ class MicroStepWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
               )),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12.0),
-          child: Container(
-            width: 0.75 * size.width,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              recipe.steps[macroStep].steps[microStep].text,
-              style:
-                  Theme.of(context).textTheme.headline4.copyWith(fontSize: 16),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12.0),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                recipe.steps[macroStep].steps[microStep].text,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4
+                    .copyWith(fontSize: 16),
+              ),
             ),
           ),
         )
@@ -296,7 +300,7 @@ class RecipeStepDetails extends StatelessWidget {
   final bool navigable;
 
   const RecipeStepDetails(
-      {Key key, this.recipe, this.step, this.navigable = false})
+      {Key key, this.recipe, this.step, this.navigable = true})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -558,15 +562,30 @@ class _RecipeFinishedScreenState extends State<RecipeFinishedScreen> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CuliButton(
-                      'Take a picture',
-                      width: size.width * 0.9,
-                      height: 75,
-                      onPressed: () => getImage(ImageSource.camera),
-                    ),
-                  ),
+                  // COMEBACK HERE
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: CuliButton(
+                            "Camera Roll",
+                            color: Culi.coral,
+                            width: size.width * 0.45,
+                            height: 75,
+                            onPressed: () => getImage(ImageSource.gallery),
+                          ),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: CuliButton(
+                              "Take a picture",
+                              color: Culi.coral,
+                              width: size.width * 0.45,
+                              height: 75,
+                              onPressed: () => getImage(ImageSource.camera),
+                            )),
+                      ]),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Consumer<Account>(

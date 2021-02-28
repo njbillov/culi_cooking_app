@@ -210,17 +210,19 @@ class CuliCheckbox extends StatelessWidget {
                                       Border.all(color: Culi.black, width: 2),
                                   borderRadius: BorderRadius.circular(12)),
                             ))),
-              Container(
-                width: padded ? size.width * 0.6 : size.width * 0.75,
-                padding: const EdgeInsets.only(right: 12),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Text(
-                    text,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3
-                        .copyWith(fontSize: 16),
+              Expanded(
+                child: Container(
+                  width: padded ? size.width * 0.6 : size.width * 0.75,
+                  padding: const EdgeInsets.only(right: 12),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                      text,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3
+                          .copyWith(fontSize: 16),
+                    ),
                   ),
                 ),
               )
@@ -327,14 +329,15 @@ class CuliSplashImage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: height * 0.4,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(imageName),
-                  fit: BoxFit.fitWidth,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(imageName),
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
             ),

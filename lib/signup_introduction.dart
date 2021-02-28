@@ -128,13 +128,15 @@ class Onboarding1 extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          Padding(
-              padding: const EdgeInsets.symmetric(vertical: 48),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.10,
-                width: 2.5,
-                decoration: BoxDecoration(color: Colors.black),
-              )),
+          Expanded(
+            child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 48),
+                child: Container(
+                  // height: MediaQuery.of(context).size.height * 0.10,
+                  width: 2.5,
+                  decoration: BoxDecoration(color: Colors.black),
+                )),
+          ),
           CuliButton(
             "Get Started",
             onPressed: () => Utils.changeScreens(
@@ -161,7 +163,7 @@ class Onboarding2 extends StatelessWidget {
         ),
         Expanded(
           child: HorizontalCardList(
-              height: MediaQuery.of(context).size.height * 0.8,
+              // height: MediaQuery.of(context).size.height * 0.8,
               children: <Widget>[
                 InformationalCardView(
                   headerText:
@@ -224,13 +226,13 @@ class SignupForm1 extends StatelessWidget {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               CuliProgressBar(progress: 0.25),
+              // Container(
+              //   height: height * 0.05,
+              // ),
               Container(
-                height: height * 0.05,
-              ),
-              Container(
-                height: height * 0.10,
+                // height: height * 0.10,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Text(
                     "What are your current cooking skills like?",
                     textAlign: TextAlign.center,
@@ -250,45 +252,51 @@ class SignupForm1 extends StatelessWidget {
                       ),
                     )),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-                child: Consumer<SignUp>(
-                    builder: (context, signup, child) => CuliCheckbox(
-                        "Afraid of my kitchen",
-                        selected: signup.level == SignUp.amateur,
-                        onPressed: () => signup.level = SignUp.amateur)),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-                child: Consumer<SignUp>(
-                    builder: (context, signup, child) => CuliCheckbox(
-                        "Eggs and microwave, that's all",
-                        selected: signup.level == SignUp.novice,
-                        onPressed: () => signup.level = SignUp.novice)),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-                child: Consumer<SignUp>(
-                    builder: (context, signup, child) => CuliCheckbox(
-                        "Few meals in the rotation",
-                        selected: signup.level == SignUp.intermediate,
-                        onPressed: () => signup.level = SignUp.intermediate)),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-                child: Consumer<SignUp>(
-                    builder: (context, signup, child) => CuliCheckbox(
-                        "I can freestyle",
-                        selected: signup.level == SignUp.expert,
-                        onPressed: () => signup.level = SignUp.expert)),
-              ),
               Expanded(
-                child: Container(
-                  width: width,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: SingleChildScrollView(
+                    child: Column(children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 8),
+                        child: Consumer<SignUp>(
+                            builder: (context, signup, child) => CuliCheckbox(
+                                "Afraid of my kitchen",
+                                selected: signup.level == SignUp.amateur,
+                                onPressed: () =>
+                                    signup.level = SignUp.amateur)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 8),
+                        child: Consumer<SignUp>(
+                            builder: (context, signup, child) => CuliCheckbox(
+                                "Eggs and microwave, that's all",
+                                selected: signup.level == SignUp.novice,
+                                onPressed: () => signup.level = SignUp.novice)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 8),
+                        child: Consumer<SignUp>(
+                            builder: (context, signup, child) => CuliCheckbox(
+                                "Few meals in the rotation",
+                                selected: signup.level == SignUp.intermediate,
+                                onPressed: () =>
+                                    signup.level = SignUp.intermediate)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 8),
+                        child: Consumer<SignUp>(
+                            builder: (context, signup, child) => CuliCheckbox(
+                                "I can freestyle",
+                                selected: signup.level == SignUp.expert,
+                                onPressed: () => signup.level = SignUp.expert)),
+                      ),
+                    ]),
+                  ),
                 ),
               ),
               Consumer<SignUp>(
@@ -337,7 +345,7 @@ class SignupForm2 extends StatelessWidget {
               height: size.height * 0.05,
             ),
             Container(
-              height: size.height * 0.10,
+              // height: size.height * 0.10,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
@@ -414,7 +422,7 @@ class SignupForm3 extends StatelessWidget {
                 height: height * 0.05,
               ),
               Container(
-                height: height * 0.10,
+                // height: height * 0.10,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -511,7 +519,7 @@ class SignupForm4 extends StatelessWidget {
                     height: size.height * 0.05,
                   ),
                   Container(
-                    height: size.height * 0.10,
+                    // height: size.height * 0.10,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -835,32 +843,24 @@ class InformationalCardView extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          children: [
-            Container(
-              height: height * 0.2,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  headerText,
-                  style: Culi.textTheme.headline4,
-                  textAlign: TextAlign.center,
-                ),
-              ),
+        Container(
+          // height: height * 0.2,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              headerText,
+              style: Culi.textTheme.headline4,
+              textAlign: TextAlign.center,
             ),
-            Container(
-              width: width,
-              height: height * 0.4,
-              decoration: BoxDecoration(),
-            ),
-            Container(
-              height: height * 0.05,
-              child: Text(bodyText,
-                  style: Theme.of(context).textTheme.bodyText1,
-                  textAlign: TextAlign.center),
-            ),
-          ],
+          ),
+        ),
+        Container(
+          // height: height * 0.05,
+          child: Text(bodyText,
+              style: Theme.of(context).textTheme.bodyText1,
+              textAlign: TextAlign.center),
         ),
       ],
     );

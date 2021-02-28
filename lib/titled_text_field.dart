@@ -138,6 +138,8 @@ class _ValidatedEntryFormState extends State<ValidatedEntryForm> {
             ),
             CuliButton(
               widget.text,
+              height: 75,
+              width: size.width * 0.9,
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   widget.onPressed();
