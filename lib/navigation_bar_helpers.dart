@@ -8,6 +8,7 @@ import 'choose_intro_path.dart';
 import 'grocery_list.dart';
 import 'menu_home.dart';
 import 'models/account.dart';
+import 'models/change_log.dart';
 import 'models/menus.dart';
 import 'notification_handlers.dart';
 import 'profile.dart';
@@ -124,7 +125,7 @@ class _NavigationRootState extends State<NavigationRoot> {
               ));
       menu.notifyListeners();
     });
-    ;
+    Provider.of<ChangeLog>(context, listen: false).fetchUpdates(context);
     return DefaultTabController(
         length: tabs.length,
         child: Builder(builder: (context) {

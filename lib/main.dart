@@ -17,6 +17,7 @@ import 'data_manipulation/gql_interface.dart';
 import 'feedback.dart';
 import 'loading_screen.dart';
 import 'models/account.dart';
+import 'models/change_log.dart';
 import 'models/feedback.dart';
 import 'models/menus.dart';
 import 'theme.dart';
@@ -29,13 +30,12 @@ void main() async {
   final Account account = await Account().loadFromCache();
   final Menus menus = await Menus().loadFromCache();
   final Menu menu = await Menu().loadFromCache();
+  final ChangeLog changelog = await ChangeLog().loadFromCache();
+  log(changelog.buildString);
   log('${account == null ? "Account is null" : "Account is not null"}');
   runApp(
     CuliInteractionNavigator(
-      account: account,
-      menus: menus,
-      menu: menu,
-    ),
+        account: account, menus: menus, menu: menu, changeLog: changelog),
   );
 }
 
@@ -47,8 +47,10 @@ class CuliInteractionNavigator extends StatefulWidget {
   final Account account;
   final Menus menus;
   final Menu menu;
+  final ChangeLog changeLog;
 
-  CuliInteractionNavigator({this.account, this.menus, this.menu, Key key})
+  CuliInteractionNavigator(
+      {this.account, this.menus, this.menu, this.changeLog, Key key})
       : super(key: key);
 
   @override
@@ -267,6 +269,7 @@ class _CuliInteractionNavigatorState extends State<CuliInteractionNavigator> {
           ChangeNotifierProvider.value(value: widget.account),
           ChangeNotifierProvider.value(value: widget.menu),
           ChangeNotifierProvider.value(value: widget.menus),
+          ChangeNotifierProvider.value(value: widget.changeLog)
         ],
         child: MaterialApp(
           navigatorKey: appState,
