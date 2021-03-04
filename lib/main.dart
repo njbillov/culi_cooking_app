@@ -86,7 +86,7 @@ class _CuliInteractionNavigatorState extends State<CuliInteractionNavigator> {
 
   void _giveFeedback() async {
     if (inScreenshot) return;
-    inScreenshot = false;
+    inScreenshot = true;
     // log(mounted ? "mounted" : "not mounted");
     // print(
     //     appState.currentContext != null ? "appstate exists" : "app state null");
