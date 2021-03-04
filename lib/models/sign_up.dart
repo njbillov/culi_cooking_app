@@ -13,7 +13,16 @@ class SignUp extends ChangeNotifier {
   String _name;
   String _email;
   String _password;
+  List<String> _restrictions = [];
   List<String> list;
+
+  List<String> get restrictions => _restrictions;
+
+  set restrictions(List<String> newRestrictions) {
+    _restrictions = newRestrictions;
+    log(toJson().toString());
+    notifyListeners();
+  }
 
   int get level => _level;
 
@@ -70,6 +79,7 @@ class SignUp extends ChangeNotifier {
         'name': name,
         'email': email,
         'password': password,
+        'restrictions': restrictions,
       };
 
   Map<String, dynamic> get createAccountJson =>

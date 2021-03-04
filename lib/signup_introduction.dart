@@ -311,11 +311,115 @@ class SignupForm1 extends StatelessWidget {
                           onPressed: () => Utils.changeScreens(
                               context: context,
                               value: signup,
-                              nextWidget: () => SignupForm2()),
+                              nextWidget: () => SignupDietaryRestrictions()),
                         ),
                       )),
             ]),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class SignupDietaryRestrictions extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Culi",
+            style:
+                Theme.of(context).textTheme.headline1.copyWith(fontSize: 27)),
+        shadowColor: Colors.white,
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            CuliProgressBar(progress: 0.4),
+            // Container(
+            //   height: height * 0.05,
+            // ),
+            Container(
+              // height: height * 0.10,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  "Do you have any dietary restrictions?",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Container(
+                  height: size.height * 0.05,
+                  width: size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/ChefHat.png"),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  )),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 8),
+                      child: Consumer<SignUp>(
+                          builder: (context, signup, child) => CuliCheckbox(
+                              "None",
+                              selected: signup.restrictions.isEmpty,
+                              onPressed: () => signup.restrictions = [])),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 8),
+                      child: Consumer<SignUp>(
+                          builder: (context, signup, child) => CuliCheckbox(
+                              "Pescatarian",
+                              selected:
+                                  signup.restrictions.contains('pescatarian'),
+                              onPressed: () =>
+                                  signup.restrictions = ['pescatarian'])),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 8),
+                      child: Consumer<SignUp>(
+                          builder: (context, signup, child) => CuliCheckbox(
+                              "Vegetarian",
+                              selected:
+                                  signup.restrictions.contains('vegetarian'),
+                              onPressed: () =>
+                                  signup.restrictions = ['vegetarian'])),
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+            Consumer<SignUp>(
+                builder: (context, signup, child) => AnimatedOpacity(
+                      opacity: signup.restrictions.length <= 2 ? 1 : 0,
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeIn,
+                      child: CuliButton(
+                        "Next",
+                        height: 75,
+                        width: size.width * 0.9,
+                        onPressed: () => Utils.changeScreens(
+                            context: context,
+                            value: signup,
+                            nextWidget: () => SignupForm2()),
+                      ),
+                    )),
+          ]),
         ),
       ),
     );

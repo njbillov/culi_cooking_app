@@ -130,15 +130,18 @@ class Account extends DatabaseChangeNotifier {
 
   Future<dynamic> createAccount({@required SignUp signupForm}) async {
     final query = r'''
-      mutation createAccount($form: PasswordForm!) {
-        createAccount(passwordForm: $form) {
+      mutation createAccount($form: PasswordForm!, $restrictions: [String]!) {
+        createAccount(passwordForm: $form, restrictions: $restrictions) {
           ok,
           code,
           session
         }
       }
     ''';
-    final variables = {'form': signupForm.createAccountJson};
+    final variables = {
+      'form': signupForm.createAccountJson,
+      'restrictions': signupForm.restrictions
+    };
     log('Create account parameter dict: $variables');
     final results = await GraphQLWrapper.mutate(query, variables: variables);
     log('Results: $results');
