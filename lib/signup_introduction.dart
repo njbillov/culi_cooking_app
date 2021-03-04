@@ -210,7 +210,6 @@ class SignupForm1 extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    signup.frequency = 3;
     return ChangeNotifierProvider.value(
       value: signup,
       child: Scaffold(

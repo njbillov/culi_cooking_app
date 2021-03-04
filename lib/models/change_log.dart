@@ -10,7 +10,7 @@ import '../theme.dart';
 
 part 'change_log.g.dart';
 
-final _currentBuild = ChangeLog(major: 0, minor: 0, patch: 5, build: 0);
+final _currentBuild = ChangeLog(major: 0, minor: 0, patch: 6, build: 0);
 
 @JsonSerializable()
 class ChangeLog extends DatabaseChangeNotifier

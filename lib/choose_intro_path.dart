@@ -432,17 +432,19 @@ class UpdateMealCountScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Consumer<Account>(
-                    builder: (context, account, child) => CuliSlider(
-                      min: 1,
-                      max: 5,
-                      initialValue: account.mealsPerWeek,
-                      sliderUpdate: (val) {
-                        log(val.toString());
-                        account.mealsPerWeek = val.round();
-                      },
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Consumer<Account>(
+                      builder: (context, account, child) => CuliSlider(
+                        min: 1,
+                        max: 5,
+                        initialValue: account.mealsPerWeek,
+                        sliderUpdate: (val) {
+                          log(val.toString());
+                          account.mealsPerWeek = val.round();
+                        },
+                      ),
                     ),
                   ),
                 ),

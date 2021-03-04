@@ -8,7 +8,7 @@ class SignUp extends ChangeNotifier {
   static const intermediate = 3;
   static const expert = 4;
   int _level = 0;
-  double _frequency = 0;
+  double _frequency = 3;
   double _preferredNumberServings = 0;
   String _name;
   String _email;
