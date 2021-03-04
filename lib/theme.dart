@@ -280,23 +280,25 @@ class CuliTopImage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Center(
-            child: Column(children: <Widget>[
-          Container(
-            width: size.width,
-            height: 0.35 * size.height,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(imageName),
-                fit: BoxFit.fitWidth,
+        body: SafeArea(top:false,
+          child: Center(
+              child: Column(children: <Widget>[
+            Container(
+              width: size.width,
+              height: 0.35 * size.height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(imageName),
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
-          ),
-          Container(
-            height: 0.05 * size.height,
-          ),
-          ...contents,
-        ])));
+            Container(
+              height: 0.05 * size.height,
+            ),
+            ...contents,
+          ])),
+        ));
   }
 }
 
