@@ -34,6 +34,7 @@ ThemeData culiTheme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
 );
 
+/// An abstract class to hold some const theme values together
 abstract class Culi {
   static const Color green = Color.fromARGB(255, 108, 158, 79);
   static const Color lightGreen = Color.fromARGB(255, 189, 242, 113);
@@ -280,7 +281,8 @@ class CuliTopImage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(top:false,
+        body: SafeArea(
+          top: false,
           child: Center(
               child: Column(children: <Widget>[
             Container(

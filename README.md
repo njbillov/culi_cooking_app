@@ -17,3 +17,11 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## Notes
+This project is configured such that it compiles down to iOS properly.  There is still work needed to port for Android.
+Some features like shake for feedback do not work in simulation.
+
+A lot of the recipe flow and widgets are split between meal_scheduler.dart, groceries.dart, grocery_list.dart, recipe_overview.dart, menu_home.dart, and theme.dart.
+
+
+
