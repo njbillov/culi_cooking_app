@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'models/recipe.dart';
 import 'utilities.dart';
@@ -34,6 +35,7 @@ ThemeData culiTheme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
 );
 
+// ignore: avoid_classes_with_only_static_members
 /// An abstract class to hold some const theme values together
 abstract class Culi {
   static const Color green = Color.fromARGB(255, 108, 158, 79);
@@ -63,42 +65,22 @@ abstract class Culi {
 
   static const double letterSpacing = -0.3;
 
-  static const TextStyle buttonTextStyle = TextStyle(
-      fontFamily: "Circular Std Bold",
-      fontSize: 13,
-      fontWeight: FontWeight.normal,
-      color: Colors.white);
-  static const TextTheme textTheme = TextTheme(
-    headline1: TextStyle(
-        fontFamily: "Bergen Sans",
-        fontWeight: FontWeight.w400,
-        color: Culi.coral,
-        fontSize: 85),
-    headline2: TextStyle(
-        fontFamily: "Circular Std Bold",
-        fontWeight: FontWeight.normal,
-        color: Culi.black,
-        fontSize: 20.25),
-    headline3: TextStyle(
-        fontFamily: "Circular Std Bold",
-        fontWeight: FontWeight.normal,
-        color: Culi.black,
-        fontSize: 19),
-    headline4: TextStyle(
-        fontFamily: "Apercu",
-        fontWeight: FontWeight.normal,
-        color: Culi.black,
-        fontSize: 19),
-    headline5: TextStyle(
-        fontFamily: "Apercu",
-        fontWeight: FontWeight.bold,
-        color: Culi.black,
-        fontSize: 16),
-    bodyText1: TextStyle(
-        fontFamily: "Apercu",
-        fontWeight: FontWeight.normal,
-        color: Culi.subtextGray,
-        fontSize: 16),
+  static TextStyle buttonTextStyle = GoogleFonts.lato(
+      fontSize: 13, fontWeight: FontWeight.normal, color: Colors.white);
+
+  static TextTheme textTheme = TextTheme(
+    headline1: GoogleFonts.poppins(
+        fontWeight: FontWeight.w400, color: Culi.coral, fontSize: 85),
+    headline2: GoogleFonts.poppins(
+        fontWeight: FontWeight.normal, color: Culi.black, fontSize: 20.25),
+    headline3: GoogleFonts.poppins(
+        fontWeight: FontWeight.normal, color: Culi.black, fontSize: 19),
+    headline4: GoogleFonts.lato(
+        fontWeight: FontWeight.normal, color: Culi.black, fontSize: 19),
+    headline5: GoogleFonts.lato(
+        fontWeight: FontWeight.bold, color: Culi.black, fontSize: 16),
+    bodyText1: GoogleFonts.lato(
+        fontWeight: FontWeight.normal, color: Culi.subtextGray, fontSize: 16),
   );
 }
 
