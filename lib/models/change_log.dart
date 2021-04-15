@@ -12,6 +12,9 @@ part 'change_log.g.dart';
 
 final _currentBuild = ChangeLog(major: 0, minor: 0, patch: 6, build: 0);
 
+/// A data model to present all the new app updates since last opening the app.
+/// ChangeLog determines all the major and minor changes from the backend and
+/// presents a pop-up after the user hits the home page.
 @JsonSerializable()
 class ChangeLog extends DatabaseChangeNotifier
     implements Comparable<ChangeLog> {
@@ -212,7 +215,6 @@ class ChangeLog extends DatabaseChangeNotifier
 
   @override
   void copyFromJson(Map<String, dynamic> json) {
-    // TODO: implement copyFromJson
     final changeLog = ChangeLog.fromJson(json);
     this
       ..major = changeLog.major

@@ -12,6 +12,9 @@ import 'signup_introduction.dart';
 import 'theme.dart';
 import 'utilities.dart';
 
+/// A loading screen at the start of the app to initialize any resources.  This
+/// is specifically used to wait until notifications handlers are finished
+/// loading.
 class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

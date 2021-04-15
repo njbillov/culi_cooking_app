@@ -34,6 +34,7 @@ import 'theme.dart';
 import 'upload_test.dart';
 import 'utilities.dart';
 
+/// A debugging interface to check how individual features work.
 class InteractionNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

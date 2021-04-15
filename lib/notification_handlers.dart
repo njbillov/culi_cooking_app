@@ -17,6 +17,8 @@ import 'utilities.dart';
 final BehaviorSubject<String> selectNotificationSubject =
     BehaviorSubject<String>();
 
+/// Notification handlers need bindings to the root system, which happens in the
+/// ios/android directories outside of Flutter code.
 class NotificationHandler {
   NotificationAppLaunchDetails appLaunchDetails;
 

@@ -5,9 +5,12 @@ import 'culi_slider.dart';
 import 'models/sign_up.dart';
 import 'theme.dart';
 
+/*
+  I'm fairly certain this is all old stuff that doesn't show up anywhere.
+ */
+
 class SignupSkills extends StatelessWidget {
   final SignUp signup = SignUp();
-
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;

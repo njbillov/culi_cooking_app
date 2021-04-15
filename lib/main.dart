@@ -58,6 +58,13 @@ class CuliInteractionNavigator extends StatefulWidget {
       _CuliInteractionNavigatorState();
 }
 
+/// In-app Feedback: The main app is wrapped with a Screenshot container
+/// and triggers when the g-forces on the phone exceed shakeDetectionThreshold.
+/// Empirically these values work well.
+///
+/// Passing Values: The main app is wrapped in Providers for the user's account,
+/// suggested menus, selected menu, and changelog.  This allows the app to
+/// access these values anywhere else in the app.
 class _CuliInteractionNavigatorState extends State<CuliInteractionNavigator> {
   final GlobalKey<NavigatorState> appState = GlobalKey<NavigatorState>();
   ScreenshotController screenshotController;
@@ -134,10 +141,6 @@ class _CuliInteractionNavigatorState extends State<CuliInteractionNavigator> {
             imageFile: image,
             type: AppFeedbackType.problem,
             stateDump: stateDump);
-        if (image != null) {
-          //TODO insert code to upload the image
-        }
-        //TODO insert code to schedule a survey notification
         Utils.changeScreens(
             context: appState.currentContext,
             routeName: '/feedback/error',
@@ -156,10 +159,6 @@ class _CuliInteractionNavigatorState extends State<CuliInteractionNavigator> {
             imageFile: image,
             type: AppFeedbackType.suggestion,
             stateDump: stateDump);
-        if (image != null) {
-          //TODO insert code to upload the image
-        }
-        //TODO insert code to schedule a survey notification
         Utils.changeScreens(
             context: appState.currentContext,
             routeName: '/feedback/suggestion',
@@ -173,10 +172,6 @@ class _CuliInteractionNavigatorState extends State<CuliInteractionNavigator> {
       child: Text("Cancel"),
       isDefaultAction: true,
       onPressed: () async {
-        if (image != null) {
-          //TODO insert code to upload the image
-        }
-        //TODO insert code to schedule a survey notification
         Navigator.of(appState.currentContext, rootNavigator: true).pop();
       },
     );

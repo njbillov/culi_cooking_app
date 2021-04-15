@@ -16,6 +16,21 @@ import 'yes_no.dart' show YesNo;
 
 part 'survey.g.dart';
 
+/// A survey data structure that has 3 different forms to make it easy to
+/// create dynamic surveys conditional on previous answers
+///
+/// Tree: The survey questions are formatted as a list of trees.  Each tree
+/// represents all the follow up questions based on a given input.  This cannot
+/// be consumed via GraphQL because it has the possibility for infinite
+/// recursion--something explicitly not allowed by GraphQL spec.
+///
+/// Flat Tree: The survey questions are formatted as a list of questions, but
+/// there are pointers to reconstitute the edges in the tree representation.
+/// This representation still has all the data for all possible paths.
+///
+/// Flat: Only the survey questions that have been answered are present.  This
+/// view represents the order that the user answered questions in the survey.
+
 @JsonSerializable()
 class Survey extends ChangeNotifier {
   @JsonKey(required: true)

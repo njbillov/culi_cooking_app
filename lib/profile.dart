@@ -15,10 +15,10 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final account = Provider.of<Account>(context, listen: true);
+    //TODO fix this so the skills update without constantly pinging the server on refresh.
     account.getSkills();
     final menus = Provider.of<Menus>(context, listen: false);
     final menu = Provider.of<Menu>(context, listen: false);
-    log(account.pendingNotificationMap.toString());
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -219,6 +219,21 @@ class Profile extends StatelessWidget {
               ),
             ),
           ])),
+        ));
+  }
+}
+
+class SettingsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Provider.value(
+        value: <String>[],
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Account Settings",
+                style: Theme.of(context).textTheme.headline2),
+          ),
+          body: Center(),
         ));
   }
 }

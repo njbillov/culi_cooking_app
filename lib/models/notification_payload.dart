@@ -5,6 +5,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'notification_payload.g.dart';
 
+/// A serializable payload to tell the app how to navigate when the user
+/// clicks in on a notification.
 @JsonSerializable()
 class NotificationPayload {
   NotificationType type;

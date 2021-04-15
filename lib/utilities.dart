@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 abstract class Utils {
+  /// A convenience method to track/react to changing screens and pass
+  /// providers across widgets on the same level of the widget tree.
   static void changeScreens<T extends ChangeNotifier>(
       {@required BuildContext context,
       @required Widget Function() nextWidget,

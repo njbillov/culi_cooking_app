@@ -10,6 +10,8 @@ final String keyColumn = '_key';
 final String valueColumn = '_value';
 const String defaultPath = 'culi_serialized_object_cache.db';
 
+/// An abstract class to allow caching objects after the app is used
+/// to make subsequent data access faster.
 abstract class DatabaseChangeNotifier extends ChangeNotifier {
   @JsonKey(ignore: true)
   final String key;

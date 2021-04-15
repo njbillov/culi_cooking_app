@@ -24,6 +24,8 @@ import 'user_skills.dart';
 
 part 'account.g.dart';
 
+/// A top level account class that handles most of the information transfer
+/// and user state.
 @JsonSerializable()
 class Account extends DatabaseChangeNotifier {
   String email;
